@@ -10,20 +10,19 @@
 <html lang="en" dir="{{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}">
 
     {{-- START HEAD SECTION --}}
-    @include('includes.dashboard.head')
+    @include('layouts.includes.dashboard.head')
     {{-- END HEAD SECTION --}}
 
     <body  class=" layout-fluid">
-        <script type="text/javascript" src="{{ asset('assets/js/demo-theme.min.js') }}"></script>
 
         <div class="page">
             {{-- START SIDEBAR SECTION --}}
-            @include('includes.dashboard.sidebar')
+            @include('layouts.includes.dashboard.sidebar')
             {{-- END SIDEBAR SECTION --}}
 
             <div class="page-wrapper">
                 {{-- START HEADER SECTION --}}
-                @include('includes.dashboard.header')
+                @include('layouts.includes.dashboard.header')
                 {{-- END HEADER SECTION --}}
 
                 <!-- Page body -->
@@ -36,13 +35,13 @@
                 </div>
 
                 {{-- START FOOTER SECTION --}}
-                    @include('includes.dashboard.footer')
+                    @include('layouts.includes.dashboard.footer')
                 {{-- END FOOTER SECTION --}}
             </div>
         </div>
 
         {{-- START JAVASCRIPTS SECTION --}}
-        @include('includes.dashboard.scripts')
+        @include('layouts.includes.dashboard.scripts')
         {{-- END JAVASCRIPTS SECTION --}}
 
     </body>
