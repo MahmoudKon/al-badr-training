@@ -17,7 +17,7 @@
                     <a class="nav-link" href="{{ route('dashboard.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-house"></i>
                         </span>
-                        <span class="nav-link-title"> Home </span>
+                        <span class="nav-link-title">الرئيسية</span>
                     </a>
                 </li>
 
@@ -26,16 +26,22 @@
                         data-bs-auto-close="outside" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-user"></i>
                         </span>
-                        <span class="nav-link-title"> Interface </span>
+                        <span class="nav-link-title">واجهه المستخدم</span>
                     </a>
-
                     <div class="dropdown-menu px-3">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="#">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"> <i
-                                            class="fa-solid fa-user"></i> </span>
-                                    <span class="nav-link-title"> Interface </span>
+                                {{-- shops --}}
+                                <a class="dropdown-item" href="{{ route('dashboard.shops.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="fa-solid fa-shop"></i> </span>
+                                    <span class="nav-link-title">قائمة المتاجر</span>
+                                </a>
+                                {{-- users --}}
+                                <a class="dropdown-item" href="{{ route('dashboard.users.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <i class="fa-solid fa-users"></i> </span>
+                                    <span class="nav-link-title">قائمة المستخدمين</span>
                                 </a>
                             </div>
                         </div>
