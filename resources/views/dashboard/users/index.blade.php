@@ -65,6 +65,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $users->withQueryString()->links() }} {{-- BootStrap 5 Is Used AppServiceProvider --}}
             </div>
         </div>
     </div>
