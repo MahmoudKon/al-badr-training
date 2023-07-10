@@ -8,8 +8,6 @@ use App\Models\User;
 class UserUpdateRequest extends FormRequest
 {
 
-    public $user;
-
     public function authorize(): bool
     {
         return true;
@@ -17,11 +15,9 @@ class UserUpdateRequest extends FormRequest
 
     public function rules(): array
     {
-        $userId = $this->route('user');
-        $this->user = User::find($userId);
         return [
             'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|unique:users,email,' . $this->user->id,
+            'email' => 'required|email|unique:users,email,' . $this->route('user'),
             'password' => 'nullable|confirmed|min:8|max:14',
         ];
     }

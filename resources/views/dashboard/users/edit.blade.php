@@ -1,7 +1,7 @@
 <div class="modal modal-blur fade" id="edit{{ $user->id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{ route('dashboard.users.update', ['user' => $user->id]) }}" method="post">
+            <form action="{{ route('dashboard.users.update', ['id' => $user->id]) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="modal-header">
