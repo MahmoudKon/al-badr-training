@@ -24,6 +24,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'shop_id',
         'name',
         'email',
         'password',
@@ -49,6 +50,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
+
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -70,8 +76,9 @@ class User extends Authenticatable
     {
         parent::boot();
         self::creating(function ($model) {
+            // dd($model);
             $model->email_verified_at = now();
-            // $model->shop_id = auth()->user()->shop_id;
+            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
         });
     }
 }

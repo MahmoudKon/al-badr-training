@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->constrained('shops', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->boolean('is_active')->comment('0 is deactive | 1 is active');
+            $table->boolean('is_active')->default(0)->comment('0 is deactive | 1 is active');
             $table->softDeletes();
             $table->timestamps();
         });

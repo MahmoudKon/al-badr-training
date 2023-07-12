@@ -12,7 +12,12 @@ class Shop extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name','address','phone','is_active'];
+    protected $fillable = ['name', 'address', 'phone', 'is_active'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function scopeFilter(Builder $builder): Builder
     {
@@ -24,12 +29,12 @@ class Shop extends Model
         static::addGlobalScope(new PerShopScope); // assign the Scope here
     }
 
-    protected static function boot(): void
-    {
-        parent::boot();
+    // protected static function boot(): void
+    // {
+    //     parent::boot();
 
-        self::creating(function($model) {
-            $model->shop_id = auth()->user()->shop_id;
-        });
-    }
+    //     self::creating(function ($model) {
+    //         $model->shop_id = auth()->user()->shop_id;
+    //     });
+    // }
 }
