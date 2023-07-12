@@ -23,8 +23,8 @@ class UserRequest extends FormRequest
     {
         return [
             'name'     => 'required|string|min:2|max:190',
-            'email'    => 'required|email',
-            'password' => (request()->method() == 'post' ? 'required' : 'nullable').'|string',
+            'email'    => 'required|email|unique:users,email,'.$this->route('user'),
+            'password' => (request()->method() == 'POST' ? 'required' : 'nullable').'|string',
         ];
     }
 
@@ -39,6 +39,6 @@ class UserRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        //
+        if ( is_null($this->password) ) $this->request->remove('password');
     }
 }

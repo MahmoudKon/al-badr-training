@@ -108,7 +108,6 @@
             $('body').on('submit', '.submit-form', function(e) {
                 e.preventDefault();
                 let form = $(this);
-                form.closest('.card').addClass('load');
 
                 $.ajax({
                     url: form.attr('action'),
@@ -117,18 +116,39 @@
                     dataType: 'JSON',
                     processData: false,
                     contentType: false,
+                    beforeSend: function (jqHXR) { form.closest('.card').addClass('load').find('.error').empty(); },
                     success: function(response) {
-                        form.closest('.card').removeClass('load');
                         $('#modal').modal('hide').find('.modal-body').empty();
                         $('#success-alert').removeClass('d-none').find('.show-alert-message').text(response.message);
                         loadTable(active_page_link);
                     },
-                    error: function(error) {
-                        form.closest('.card').removeClass('load');
-                        $('#error-alert').removeClass('d-none').find('.show-alert-message').text(error.responseJSON.message);
-                    }
-                })
+                    error: function(jqXHR) {
+                        handleErrors(jqXHR, form);
+                    },
+                    complete: function (jqXHR, textStatus) { form.closest('.card').removeClass('load'); }
+                });
             });
+
+            function handleErrors(jqXHR, form = null)
+            {
+                let ele = $('#error-alert');
+                if (jqXHR.readyState == 0) return true;
+
+                if ([401,401,402,403,404].includes(jqXHR.status))
+                    ele.removeClass('d-none').find('.show-alert-message').text(jqXHR.responseJSON.message);
+
+                else if (jqXHR.status == 422) { // List Validation Error
+                    $.each(jqXHR.responseJSON.errors, function (key, val) {
+                        val = Array.isArray(val) ? val[0] : val;
+                        form.find(`#${key.replaceAll('.', '-')}_error`).text(val).fadeIn(300);
+                    });
+                } else if (typeof jqXHR.responseJSON !== 'undefined' && typeof jqXHR.responseJSON.line !== 'undefined') {
+                    ele.removeClass('d-none').find('.show-alert-message').text('File: ' + jqXHR.responseJSON.file + ' (Line: ' + jqXHR.responseJSON.line + ')', jqXHR.responseJSON.message);
+                } else {
+                    ele.removeClass('d-none').find('.show-alert-message').text(jqXHR.responseJSON || jqXHR.statusText);
+                    $('#load-backend-info').modal("show").find('.modal-body').empty().append(jqXHR.responseText);
+                }
+            }
 
             loadTable();
         });

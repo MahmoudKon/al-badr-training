@@ -49,15 +49,9 @@
     {{-- END JAVASCRIPTS SECTION --}}
 
 
-
-
-    <div class="modal modal-blur fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body"> </div>
-            </div>
-        </div>
-    </div>
+    {{-- START MODALS SECTION --}}
+    @include('layouts.includes.dashboard.modals')
+    {{-- END MODALS SECTION --}}
 
 </body>
 

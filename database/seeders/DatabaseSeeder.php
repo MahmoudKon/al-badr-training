@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->truncateTables();
+        $this->call(AdminSeeder::class);
+        \App\Models\Shop::factory(5)->has(\App\Models\User::factory()->count(5))->create();
+    }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+    protected function truncateTables()
+    {
+        $tableNames = \Illuminate\Support\Facades\Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
+        foreach ($tableNames as $name) {
+            if ($name != 'migrations')
+                \Illuminate\Support\Facades\DB::table($name)->truncate();
+        }
     }
 }

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'shop_id'
     ];
 
     /**
@@ -72,8 +73,8 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        // self::creating(function($model) {
-        //     $model->shop_id = auth()->user()->shop_id;
-        // });
+        self::creating(function($model) {
+            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
+        });
     }
 }

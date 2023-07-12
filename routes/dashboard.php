@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('dashboard', 'layouts.dashboard');
+Route::view('/', 'layouts.dashboard');
 
 
 Route::resource('users', 'UserController');
