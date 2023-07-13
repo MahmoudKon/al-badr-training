@@ -64,7 +64,9 @@ class User extends Authenticatable
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder;
+        return $builder->when(request()->get('search'), function ($query, $search) {
+            $query->where('name', 'LIKE', "%$search%")->orWhere('email', 'LIKE', "%$search%");
+        });
     }
 
     protected static function booted(): void
@@ -76,7 +78,6 @@ class User extends Authenticatable
     {
         parent::boot();
         self::creating(function ($model) {
-            // dd($model);
             $model->email_verified_at = now();
             $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
         });

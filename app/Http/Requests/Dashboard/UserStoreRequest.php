@@ -16,36 +16,24 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8|max:14',
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'الاسم مطلوب',
-            'name.string' => 'يجب الا يحتوي الاسم علي ارقام او رموز',
-            'name.max' => 'الاسم اطول من اللازم',
-            'name.min' => 'يجب الا يقل الاسم عن ثلاثه احرف',
-
-            'email.required' => 'البريد الالكتروني مطلوب',
-            'email.email' => 'الريد الالكتروني غير صحيح',
-            'email.unique' => 'البريد الالكتروني مسنخدم بالفعل',
-
-            'password.required' => 'كلمة المرور مطلوبة',
-            'password.max' => 'كلمة المرور يجب الا تزيد عن 14 حرف',
-            'password.min' => 'كلمة المرور قصيرة',
-            'password.confirmed' => 'كلمةالمرور غير متطابقة',
-
+            'name'     => 'required|string|min:2|max:190',
+            'email'    => 'required|string',
+            'address'    => 'required|string',
+            'phone'    => 'required|string',
+            'companyname'    => 'required|string',
+            'password' => (request()->method() == 'post' ? 'required' : 'nullable') . '|string',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            //
+            'name'     => trans('users.name'),
+            'email'    => trans('users.email'),
+            'password' => trans('users.password'),
+            'address'     => trans('users.address'),
+            'phone'    => trans('users.phone'),
+            'companyname' => trans('users.companyname'),
         ];
     }
 
