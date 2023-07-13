@@ -13,7 +13,8 @@ class PerShopScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where("{$model->getTable()}.shop_id", auth()->user()->shop_id)
+        $column = $model->getTable() == 'shops' ? 'id' : 'shop_id';
+        $builder->where("{$model->getTable()}.$column", auth()->user()->shop_id)
                 ->orderBy("{$model->getTable()}.{$model->getKeyName()}", 'DESC');
     }
 }

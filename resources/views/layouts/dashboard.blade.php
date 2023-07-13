@@ -9,40 +9,50 @@
 -->
 <html lang="en" dir="{{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}">
 
-    {{-- START HEAD SECTION --}}
-    @include('layouts.includes.dashboard.head')
-    {{-- END HEAD SECTION --}}
+{{-- START HEAD SECTION --}}
+@include('layouts.includes.dashboard.head')
+{{-- END HEAD SECTION --}}
 
-    <body  class=" layout-fluid">
+<body class=" layout-fluid">
 
-        <div class="page">
-            {{-- START SIDEBAR SECTION --}}
-            @include('layouts.includes.dashboard.sidebar')
-            {{-- END SIDEBAR SECTION --}}
+    <div class="page">
+        {{-- START SIDEBAR SECTION --}}
+        @include('layouts.includes.dashboard.sidebar')
+        {{-- END SIDEBAR SECTION --}}
 
-            <div class="page-wrapper">
-                {{-- START HEADER SECTION --}}
-                @include('layouts.includes.dashboard.header')
-                {{-- END HEADER SECTION --}}
+        <div class="page-wrapper">
+            {{-- START HEADER SECTION --}}
+            @include('layouts.includes.dashboard.header')
+            {{-- END HEADER SECTION --}}
 
-                <!-- Page body -->
-                <div class="page-body">
-                    <div class="container-xl">
-                        <div class="row row-deck row-cards">
-                            @yield('content')
-                        </div>
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        {{-- START ALERT SECTION --}}
+                        @include('layouts.includes.dashboard.alerts')
+                        {{-- END ALERT SECTION --}}
+
+                        @yield('content')
                     </div>
                 </div>
-
-                {{-- START FOOTER SECTION --}}
-                    @include('layouts.includes.dashboard.footer')
-                {{-- END FOOTER SECTION --}}
             </div>
+
+            {{-- START FOOTER SECTION --}}
+            @include('layouts.includes.dashboard.footer')
+            {{-- END FOOTER SECTION --}}
         </div>
+    </div>
 
-        {{-- START JAVASCRIPTS SECTION --}}
-        @include('layouts.includes.dashboard.scripts')
-        {{-- END JAVASCRIPTS SECTION --}}
+    {{-- START JAVASCRIPTS SECTION --}}
+    @include('layouts.includes.dashboard.scripts')
+    {{-- END JAVASCRIPTS SECTION --}}
 
-    </body>
+
+    {{-- START MODALS SECTION --}}
+    @include('layouts.includes.dashboard.modals')
+    {{-- END MODALS SECTION --}}
+
+</body>
+
 </html>

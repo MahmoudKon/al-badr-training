@@ -23,3 +23,27 @@
         </div>
     @endif
 @endforeach
+
+<div id="error-alert"class="alert alert-danger alert-dismissible d-none" role="alert">
+    <div class="d-flex">
+        <div>
+            <span class="alert-icon"><i class="fas fa-thumbs-down"></i></span>
+        </div>
+        <div>
+            <span class="text-muted show-alert-message"></span>
+        </div>
+    </div>
+    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+</div>
+
+<div id="success-alert"class="alert alert-success alert-dismissible d-none" role="alert">
+    <div class="d-flex">
+        <div>
+            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+        </div>
+        <div>
+            <span class="text-muted show-alert-message"></span>
+        </div>
+    </div>
+    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+</div>

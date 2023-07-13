@@ -1,7 +1,7 @@
 @error($input)
-    <span class="text-danger"> <strong>{{ $message }}</strong> </span>
+    <span class="text-danger error"> <strong>{{ $message }}</strong> </span>
 @enderror
 
 @if ($input)
-    <span class="text-danger error" id="{{ $input }}_error"></span>
+    <strong class="text-danger error" id="{{ $input }}_error"></strong>
 @endif

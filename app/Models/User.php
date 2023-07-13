@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'shop_id'
     ];
 
     /**
@@ -58,7 +59,9 @@ class User extends Authenticatable
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder;
+        return $builder->when(request()->get('search'), function($query, $search) {
+            $query->where('name', 'LIKE', "%$search%")->orWhere('email', 'LIKE', "%$search%");
+        });
     }
 
     protected static function booted(): void
@@ -70,8 +73,15 @@ class User extends Authenticatable
     // {
     //     parent::boot();
 
+<<<<<<< HEAD
     //     self::creating(function($model) {
     //         $model->shop_id = auth()->user()->shop_id;
     //     });
     // }
+=======
+        self::creating(function($model) {
+            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
+        });
+    }
+>>>>>>> 8df6cc733abfce36d91e27e49bd79d858636a5a7
 }
