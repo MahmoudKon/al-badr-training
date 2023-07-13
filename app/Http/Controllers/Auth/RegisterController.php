@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Shop;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\ShopService;
+use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -49,9 +53,21 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'shop'         => ['required', 'array', 'size:3'],
+            'shop.name'    => ['required', 'string'],
+            'shop.phone'   => ['required', 'string'],
+            'shop.address' => ['required', 'string'],
+            'user'         => ['required', 'array', 'size:4'],
+            'user.name'    => ['required', 'string', 'max:255'],
+            'user.email'   => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$data['user']['name']],
+            'user.password'=> ['required', 'string', 'min:8', 'confirmed'],
+        ], [], [
+            'shop.name'    => 'name',
+            'shop.phone'   => 'phone',
+            'shop.address' => 'address',
+            'user.name'    => 'name',
+            'user.email'   => 'email',
+            'user.password'=> 'password',
         ]);
     }
 
@@ -63,10 +79,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-        ]);
+        // DB::beginTransaction();
+            $shop = (new ShopService)->handel( $data['shop'] );
+            $user = (new UserService)->handel( array_merge($data['user'], ['shop_id' => $shop->id]) );
+        // DB::commit();
+        return $user;
     }
 }

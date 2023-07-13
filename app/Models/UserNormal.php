@@ -13,12 +13,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Scopes\PerShopScope;
 use App\Traits\FilterPerShop;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class UserNormal extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, FilterPerShop;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -58,8 +60,29 @@ class User extends Authenticatable
         );
     }
 
+    public function scopeFilter(Builder $builder): Builder
+    {
+        return $builder->when(request()->get('search'), function($query, $search) {
+            $query->where('name', 'LIKE', "%$search%")->orWhere('email', 'LIKE', "%$search%");
+        });
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id')->select('id', 'name');
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new PerShopScope); // assign the Scope here
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::creating(function($model) {
+            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
+        });
     }
 }

@@ -8,41 +8,59 @@
             @csrf
 
             <div class="mb-3">
+                <label class="form-label required">Shop Name</label>
+                <input type="text" class="form-control" placeholder="Type your Shop Name..." name="shop[name]" autocomplete="off" value="{{ old('shop.name') }}" required>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'shop.name'])
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label required">Phone</label>
+                <input type="text" class="form-control" placeholder="Type your Phone..." name="shop[phone]" autocomplete="off" value="{{ old('shop.phone') }}" required>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'shop.phone'])
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label required">Address</label>
+                <input type="text" class="form-control" placeholder="Type your Address..." name="shop[address]" autocomplete="off" value="{{ old('shop.address') }}" required>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'shop.address'])
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label required">Username</label>
-                <input type="text" class="form-control" placeholder="Type your username..." name="username" autocomplete="off" value="{{ old('username', env('LOGIN_NAME')) }}" required>
-                @include('layouts.includes.dashboard.validation-error', ['input' => 'username'])
+                <input type="text" class="form-control" placeholder="Type your Username..." name="user[name]" autocomplete="off" value="{{ old('user.name') }}" required>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'user.name'])
             </div>
 
             <div class="mb-3">
                 <label class="form-label required">Email</label>
-                <input type="email" class="form-control" placeholder="Type your email..." name="email" autocomplete="off" value="{{ old('email', env('LOGIN_EMAIL')) }}" required>
-                @include('layouts.includes.dashboard.validation-error', ['input' => 'email'])
+                <input type="email" class="form-control" placeholder="Type your email..." name="user[email]" autocomplete="off" value="{{ old('user.email') }}" required>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'user.email'])
             </div>
 
             <div class="mb-2">
                 <label class="form-label required"> Password </label>
                 <div class="input-group input-group-flat">
-                    <input type="password" class="form-control password" placeholder="Your password" autocomplete="off" name="password" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
+                    <input type="password" class="form-control password" placeholder="Your password" autocomplete="off" name="user[password]" autocomplete="off" value="" required>
                     <span class="input-group-text">
                         <a href="#" class="link-secondary show-password" data-show='false' title="Show password" data-bs-toggle="tooltip">
                             <i class="fas fa-eye"></i>
                         </a>
                     </span>
                 </div>
-                @include('layouts.includes.dashboard.validation-error', ['input' => 'password'])
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'user.password'])
             </div>
 
             <div class="mb-2">
                 <label class="form-label required"> Confirm Password </label>
                 <div class="input-group input-group-flat">
-                    <input type="password" class="form-control password" placeholder="Your password" autocomplete="off" name="password_confirmation" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
+                    <input type="password" class="form-control password" placeholder="Your password" autocomplete="off" name="user[password_confirmation]" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
                     <span class="input-group-text">
                         <a href="#" class="link-secondary show-password" data-show='false' title="Show password" data-bs-toggle="tooltip">
                             <i class="fas fa-eye"></i>
                         </a>
                     </span>
                 </div>
-                @include('layouts.includes.dashboard.validation-error', ['input' => 'password_confirmation'])
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'user.password_confirmation'])
             </div>
 
             <div class="form-footer">
@@ -61,6 +79,10 @@
                 $(this).data('show', ! $(this).data('show'));
                 let type = $(this).data('show') ? 'text' : 'password';
                 $(this).closest('.input-group').find('input.password').attr('type', type);
+            });
+
+            $('form').submit(function(e) {
+                $(this).closest('.card').addClass('load');
             });
         });
     </script>

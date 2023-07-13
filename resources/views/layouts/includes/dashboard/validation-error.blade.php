@@ -3,5 +3,5 @@
 @enderror
 
 @if ($input)
-    <strong class="text-danger error" id="{{ $input }}_error"></strong>
+    <strong class="text-danger error" id="{{ str_replace('.', '-', $input) }}_error"></strong>
 @endif
