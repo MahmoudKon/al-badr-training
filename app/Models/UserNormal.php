@@ -12,13 +12,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Scopes\PerShopScope;
-use App\Traits\FilterPerShop;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
 class UserNormal extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, FilterPerShop;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'users';
     /**
