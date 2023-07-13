@@ -66,12 +66,12 @@ class User extends Authenticatable
         // static::addGlobalScope(new PerShopScope); // assign the Scope here
     }
 
-    protected static function boot(): void
-    {
-        parent::boot();
+    // protected static function boot(): void
+    // {
+    //     parent::boot();
 
-        self::creating(function($model) {
-            $model->shop_id = auth()->user()->shop_id;
-        });
-    }
+    //     self::creating(function($model) {
+    //         $model->shop_id = auth()->user()->shop_id;
+    //     });
+    // }
 }
