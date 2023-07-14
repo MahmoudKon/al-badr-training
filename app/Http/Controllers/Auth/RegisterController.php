@@ -83,6 +83,6 @@ class RegisterController extends Controller
             $shop = (new ShopService)->handel( $data['shop'] );
             $user = (new UserService)->handel( array_merge($data['user'], ['shop_id' => $shop->id]) );
         // DB::commit();
-        return $user;
+        return User::where('shop_id' , $shop->id)->find($user->id);
     }
 }
