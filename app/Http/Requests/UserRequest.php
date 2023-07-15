@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dashboard;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class UserRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -17,10 +17,7 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name'     => 'required|string|min:2|max:190',
-            'email'    => 'required|string',
-            'address'    => 'required|string',
-            'phone'    => 'required|string',
-            'companyname'    => 'required|string',
+            'email'    => 'required|string|unique:users,email,'.$this->route('user'),
             'password' => (request()->method() == 'post' ? 'required' : 'nullable') . '|string',
         ];
     }
@@ -31,14 +28,11 @@ class UserStoreRequest extends FormRequest
             'name'     => trans('users.name'),
             'email'    => trans('users.email'),
             'password' => trans('users.password'),
-            'address'     => trans('users.address'),
-            'phone'    => trans('users.phone'),
-            'companyname' => trans('users.companyname'),
         ];
     }
 
     protected function prepareForValidation(): void
     {
-        //
+        if ( is_null($this->password) ) $this->request->remove('password');
     }
 }

@@ -11,9 +11,16 @@ class PerShopScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      */
+    // public function apply(Builder $builder, Model $model): void
+    // {
+    //     $builder->where("{$model->getTable()}.id", auth()->user()->shop_id)
+    //         ->orderBy("{$model->getTable()}.{$model->getKeyName()}", 'DESC');
+    // }
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where("{$model->getTable()}.id", auth()->user()->shop_id)
-            ->orderBy("{$model->getTable()}.{$model->getKeyName()}", 'DESC');
+        $builder->when(auth()->check(), function ($query) use ($model) {
+            $column = $model->getTable() == 'shops' ? 'id' : 'shop_id';
+            $query->where("{$model->getTable()}.$column", auth()->user()->shop_id);
+        })->orderBy("{$model->getTable()}.{$model->getKeyName()}", 'DESC');
     }
 }

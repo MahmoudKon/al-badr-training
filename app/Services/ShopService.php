@@ -3,15 +3,15 @@
 namespace App\Services;
 
 use Exception;
-use App\Models\UserDashboard;
+use App\Models\Shop;
 
-class UserService
+class ShopService
 {
 
     public function handel(array $data, ?int $id = null)
     {
         try {
-            return UserDashboard::updateOrCreate(['id' => $id], $data);
+            return Shop::updateOrCreate(['id' => $id], $data);
         } catch (Exception $e) {
             return $e;
         }

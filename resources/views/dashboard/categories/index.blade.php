@@ -4,11 +4,13 @@
     <div class="card">
         <div class="card-header justify-content-between">
             <h3 class="card-title">
-                {{ $title }}
+                الاصناف
                 <span id="show-count"></span>
             </h3>
-            <a href="{{ route('dashboard.users.create') }}" class="btn btn-sm btn-primary open-modal float-left">انشاء مستخدم
-                <i class="fas fa-plus"></i></a>
+            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-primary open-modal float-left">
+                انشاء صنف
+                <i class="fas fa-plus"></i>
+            </a>
         </div>
 
         <div class="card-body border-bottom py-3">
@@ -39,7 +41,7 @@
                                 aria-label="Select all invoices"></th>
                         <th class="w-1">No.</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Parent</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

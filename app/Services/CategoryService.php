@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\Category;
 use Exception;
-use App\Models\UserDashboard;
 
-class UserService
+class CategoryService
 {
 
     public function handel(array $data, ?int $id = null)
     {
+        // dd($data);
         try {
-            return UserDashboard::updateOrCreate(['id' => $id], $data);
+            return Category::updateOrCreate(['id' => $id], $data);
         } catch (Exception $e) {
             return $e;
         }

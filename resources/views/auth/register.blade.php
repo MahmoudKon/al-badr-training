@@ -9,44 +9,44 @@
 
                 <div class="mb-3">
                     <label class="form-label required">Username</label>
-                    <input type="text" class="form-control" placeholder="Type your username..." name="name"
+                    <input type="text" class="form-control" placeholder="Type your username..." name="user[name]"
                         autocomplete="off" value="{{ old('name', env('LOGIN_NAME')) }}" required>
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'name'])
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label required">Company Name</label>
-                    <input type="text" class="form-control" placeholder="Type your  companyname..." name="companyname"
+                    <input type="text" class="form-control" placeholder="Type your  companyname..." name="shop[name]"
                         autocomplete="off" value="{{ old('companyname') }}" required>
-                    @include('layouts.includes.dashboard.validation-error', ['input' => 'companyname'])
+                    @include('layouts.includes.dashboard.validation-error', ['input' => 'name'])
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label required">Email</label>
-                    <input type="email" class="form-control" placeholder="Type your email..." name="email"
+                    <input type="email" class="form-control" placeholder="Type your email..." name="user[email]"
                         autocomplete="off" value="{{ old('email', env('LOGIN_EMAIL')) }}" required>
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'email'])
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label required">Address</label>
-                    <input type="text" class="form-control" placeholder="Type your  address..." name="address"
+                    <input type="text" class="form-control" placeholder="Type your  address..." name="shop[address]"
                         autocomplete="off" value="{{ old('address') }}" required>
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'address'])
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label required">Phone</label>
-                    <input type="text" class="form-control" placeholder="Type your  phone..." name="phone"
+                    <input type="text" class="form-control" placeholder="Type your  phone..." name="shop[phone]"
                         autocomplete="off" value="{{ old('phone') }}" required>
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'phone'])
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label required"> Password </label>
+                    <label class="form-label required">Password</label>
                     <div class="input-group input-group-flat">
                         <input type="password" class="form-control password" placeholder="Your password" autocomplete="off"
-                            name="password" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
+                            name="user[password]" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
                         <span class="input-group-text">
                             <a href="#" class="link-secondary show-password" data-show='false' title="Show password"
                                 data-bs-toggle="tooltip">
@@ -60,8 +60,9 @@
                 <div class="mb-2">
                     <label class="form-label required"> Confirm Password </label>
                     <div class="input-group input-group-flat">
-                        <input type="password" class="form-control password" placeholder="Your password" autocomplete="off"
-                            name="password_confirmation" autocomplete="off" value="{{ env('LOGIN_PASS') }}" required>
+                        <input type="user[password]" class="form-control password" placeholder="Your password"
+                            autocomplete="off" name="user[password_confirmation]" autocomplete="off"
+                            value="{{ env('LOGIN_PASS') }}" required>
                         <span class="input-group-text">
                             <a href="#" class="link-secondary show-password" data-show='false' title="Show password"
                                 data-bs-toggle="tooltip">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Shop;
 use App\Models\User;
+use App\Services\ShopService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -51,9 +53,24 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'shop' => ['required', 'array', 'size:3'],
+
+            'shop.name' => ['required', 'string'],
+            'shop.phone' => ['required', 'string'],
+            'shop.address' => ['required', 'string'],
+
+            'user' => ['required', 'array', 'size:4'],
+
+            'user.name' => ['required', 'string', 'max:255'],
+            'user.email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $data['user']['name']],
+            'user.password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [], [
+            'shop.name'    => 'name',
+            'shop.phone'   => 'phone',
+            'shop.address' => 'address',
+            'user.name'    => 'name',
+            'user.email'   => 'email',
+            'user.password' => 'password',
         ]);
     }
 
@@ -65,24 +82,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        try {
-            DB::beginTransaction();
-            $shop = Shop::create([
-                'name' => $data['companyname'],
-                'address' => $data['address'],
-                'phone' => $data['phone'],
-            ]);
-            $user = User::create([
-                'shop_id' => $shop['id'],
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => $data['password'],
-            ]);
-            DB::commit();
-            return $user;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return $e;
-        }
+        $shop = (new ShopService)->handel($data['shop']);
+
+        $user = (new UserService)->handel(array_merge($data['user'], ['shop_id' => $shop->id]));
+        return User::find($user->id);
     }
 }

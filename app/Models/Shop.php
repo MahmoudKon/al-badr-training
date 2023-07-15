@@ -16,9 +16,12 @@ class Shop extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class, 'shop_id', 'id');
     }
-
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'shop_id', 'id');
+    }
     public function scopeFilter(Builder $builder): Builder
     {
         return $builder;
@@ -26,7 +29,7 @@ class Shop extends Model
 
     protected static function booted(): void
     {
-        // static::addGlobalScope(new PerShopScope); // assign the Scope here
+        static::addGlobalScope(new PerShopScope); // assign the Scope here
     }
 
     // protected static function boot(): void
