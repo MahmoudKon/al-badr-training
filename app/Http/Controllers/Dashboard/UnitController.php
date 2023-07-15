@@ -33,7 +33,7 @@ class UnitController extends Controller
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
+                : response()->json(['message' => 'تم انشاء الوحده بنجاح'], 200);
     }
 
     public function edit(Unit $unit)
