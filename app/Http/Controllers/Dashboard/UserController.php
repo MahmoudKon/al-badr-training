@@ -6,53 +6,41 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\UserNormal;
 use App\Services\UserService;
+use App\Http\Controllers\BaseController;
+
 use Exception;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
-    public function index()
-    {
-        if (request()->ajax()) {
-            $rows = UserNormal::filter();
-            return response()->json([
-                'count' => $rows->count(),
-                'view'  => view('dashboard.users.includes.rows', ['rows' => $rows->paginate( request()->get('limit', 1) )])->render(),
-            ]);
-        }
-        return view('dashboard.users.index');
+    
+    public function index(UserNormal $user){
+       return  $this->indexs($user, 'users');
     }
+
 
     public function create()
     {
         return view('dashboard.users.create');
     }
 
-    public function store(UserRequest $request, UserService $service)
+    public function store (UserRequest $request, UserService $service)
     {
-        $row = $service->handel($request->validated());
-
-        return $row instanceof Exception
-                ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
+        return  $this->stores( $request,  $service, "تم انشاء اليوزر بنجاح") ;
     }
+
 
     public function edit(UserNormal $user)
     {
         return view('dashboard.users.update', ['row' => $user]);
     }
 
-    public function update(UserRequest $request, UserService $service, $user)
-    {
-        $row = $service->handel($request->validated(), $user);
+    public function update(UserRequest $request, UserService $service, $user){
 
-        return $row instanceof Exception
-                ? response()->json($row, 500)
-                : response()->json(['message' => 'تم تعديل اليوزر بنجاح'], 200);
+        return  $this->updates( $request,  $service, $user, "تم تعديل اليوزر بنجاح") ;
+
     }
 
-    public function destroy(UserNormal $user)
-    {
-        $user->delete();
-        return response()->json(['message' => 'تم حذف اليوزر بنجاح'], 200);
+    public function destroy(UserNormal $user){
+        return $this->destroys($user,  "تم حذف اليوزر بنجاح");
     }
 }

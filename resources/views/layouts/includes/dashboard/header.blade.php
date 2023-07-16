@@ -29,7 +29,9 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="./settings.html" class="dropdown-item">Settings</a>
+                  <!--  <a href="{{ route('shops.edit', auth()->user()->shop->id) }}" class="dropdown-item">Settings</a> -->
+                    <a href="" class="dropdown-item">Settings</a>
+
                     <form method="post" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>

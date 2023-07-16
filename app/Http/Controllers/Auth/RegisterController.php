@@ -11,6 +11,7 @@ use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\BaseController;
 
 class RegisterController extends Controller
 {
@@ -84,5 +85,18 @@ class RegisterController extends Controller
             $user = (new UserService)->handel( array_merge($data['user'], ['shop_id' => $shop->id]) );
         // DB::commit();
         return $user;
+    }
+
+    public function edit(Shop $shop)
+    {
+        return view('dashboard.shops.update', ['row' => $shop]);
+    }
+
+    public function update(Request $data, Shop $row){
+        $row = (new ShopService)->handel( $data['row'] , $row);
+
+        return $shop instanceof Exception
+                ? response()->json($row, 500)
+                : response()->json(['message' => "تم تعديل المؤسسة بنجاح"], 200);
     }
 }
