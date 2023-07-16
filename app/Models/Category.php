@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'shop_id'];
+    protected $fillable = ['name', 'is_show', 'shop_id', 'category_id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id')->select('id', 'name', 'category_id');
+    }
+
+    public function subs()
+    {
+        return $this->hasMany(Category::class, 'category_id')->select('id', 'name', 'category_id')->with('subs');
+    }
 
     public function scopeFilter(Builder $builder): Builder
     {

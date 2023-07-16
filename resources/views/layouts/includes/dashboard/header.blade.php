@@ -19,17 +19,16 @@
 
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('assets/img/avatars/069m.jpg') }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ auth()->user()->name }}</div>
-                        <div class="mt-1 small text-muted">UI Designer</div>
+                        <div class="mt-1 small text-muted">{{ auth()->user()->email }}</div>
                     </div>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="{{ routeHelper('shop.index') }}" class="dropdown-item">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a href="./settings.html" class="dropdown-item">Settings</a>
                     <form method="post" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>

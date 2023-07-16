@@ -20,6 +20,10 @@ input:disabled {
     width: 100% !important;
 }
 
+.select2-container {
+    z-index: 1055 !important
+}
+
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgb(245 247 250) !important;
 }
@@ -44,7 +48,7 @@ input:disabled {
     font-size: 19px;
     font-weight: bolder;
     color: #000;
-    z-index: 1029;
+    z-index: 1057;
     animation: load .9s linear infinite;
 }
 
@@ -58,7 +62,7 @@ input:disabled {
     right: 0;
     background-color: rgb(255, 255, 255);
     opacity: 0.8;
-    z-index: 1028;
+    z-index: 1056;
     height: 100%;
     transition: all .5s ease-in-out;
 }

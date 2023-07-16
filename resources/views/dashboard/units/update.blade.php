@@ -1,10 +1,10 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title"> تعديل وحده المستخدم </h3>
+        <h3 class="card-title"> Edit Unit Data </h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
 
-
-    <form action="{{ route('dashboard.units.update', $row) }}" class="submit-form" method="post">
+    <form action="{{ routeHelper('units.update', $row) }}" class="submit-form" method="post">
         @method('PUT')
         @include('dashboard.units.includes.inputs')
     </form>

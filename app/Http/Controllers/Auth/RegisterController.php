@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shop;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Services\ShopService;
@@ -60,7 +59,7 @@ class RegisterController extends Controller
             'user'         => ['required', 'array', 'size:4'],
             'user.name'    => ['required', 'string', 'max:255'],
             'user.email'   => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$data['user']['name']],
-            'user.password'=> ['required', 'string', 'min:8', 'confirmed'],
+            'user.password'=> ['required', 'string', 'min:3', 'confirmed'],
         ], [], [
             'shop.name'    => 'name',
             'shop.phone'   => 'phone',
@@ -79,10 +78,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
             $shop = (new ShopService)->handel( $data['shop'] );
             $user = (new UserService)->handel( array_merge($data['user'], ['shop_id' => $shop->id]) );
-        // DB::commit();
-        return $user;
+        DB::commit();
+        return User::where('shop_id', $shop->id)->find($user->id);
     }
 }

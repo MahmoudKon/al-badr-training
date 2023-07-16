@@ -26,5 +26,9 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
             'password'          => 123
         ]);
+
+        \App\Models\User::factory(5)->create(['shop_id' => $shop->id]);
+        \App\Models\Unit::factory(5)->create(['shop_id' => $shop->id]);
+        \App\Models\Category::factory(5)->create(['shop_id' => $shop->id]);
     }
 }

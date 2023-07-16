@@ -81,7 +81,7 @@ class UserNormal extends Model
         parent::boot();
 
         self::creating(function($model) {
-            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
+            $model->shop_id = shopId($model->shop_id);
         });
     }
 }

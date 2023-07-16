@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Unique;
 
-class UnitRequest extends FormRequest
+class ShopRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +22,18 @@ class UnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:units,name,'.$this->route('unit').',id,shop_id,'.shopId()
+            'name' => 'required|string|min:1',
+            'address' => 'required|string|min:1',
+            'phone' => 'required|string|min:1',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'الوحده',
+            'name' => 'Name',
+            'address' => 'Address',
+            'phone' => 'Phone',
         ];
     }
 }

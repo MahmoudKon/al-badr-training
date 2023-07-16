@@ -8,13 +8,22 @@
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
         <td>
-            <a href="{{ route('dashboard.units.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
+            <form method="post" action="{{ routeHelper('categories.toggle.status', $row) }}" class="submit-form">
+                @csrf
+
+                <label class="form-check form-check-single form-switch cursor-pointer">
+                    <input class="form-check-input cursor-pointer change-status" type="checkbox" @checked($row->is_show)>
+                </label>
+            </form>
+        </td>
+        <td>
+            <a href="{{ route('dashboard.categories.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
         <td>
-            <form action="{{ route('dashboard.units.destroy', $row) }}" method="post" class="submit-form">
+            <form action="{{ route('dashboard.categories.destroy', $row) }}" method="post" class="submit-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">

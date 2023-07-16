@@ -30,5 +30,5 @@
 </div>
 
 <div class="card-footer text-center">
-    <button type="submit" class="btn btn-info btn-sm"> حفظ <i class="fas fa-save mx-2"></i> </button>
+    <button type="submit" class="btn btn-info"> Save <i class="fas fa-save"></i> </button>
 </div>

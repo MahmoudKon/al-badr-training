@@ -17,6 +17,7 @@
                         </th>
                         <th class="w-1">No.</th>
                         <th>Name</th>
+                        <th>Is Show</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -25,4 +26,14 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(function() {
+            $('body').on('change', '.change-status', function() {
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
 @endsection

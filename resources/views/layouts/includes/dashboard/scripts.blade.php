@@ -8,6 +8,7 @@
 <!-- Tabler Core -->
 <script type="text/javascript" src="{{ asset('assets/js/tabler.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/demo.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
 
 @yield('js')
 @stack('js')

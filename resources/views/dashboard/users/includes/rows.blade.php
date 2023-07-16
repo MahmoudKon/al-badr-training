@@ -1,12 +1,16 @@
-@foreach ($rows as $row)
+@forelse ($rows as $row)
     <tr>
-        <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
+        <td>
+            <label class="form-check form-check-single form-switch cursor-pointer p-0">
+                <input class="form-check-input cursor-pointer m-0 align-middle row-checkbox" value="{{ $row->id }}" type="checkbox">
+            </label>
+        </td>
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
         <td> {{ $row->email }} </td>
         <td>
             <a href="{{ route('dashboard.users.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
-                تعديل
+                Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
@@ -15,13 +19,17 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">
-                    حذف
+                    Delete
                     <i class="fas fa-trash"></i>
                 </button>
             </form>
         </td>
     </tr>
-@endforeach
+@empty
+    <tr>
+        <td colspan="10" class="text-center"> <b> No Data Matched... </b> </td>
+    </tr>
+@endforelse
 
 <tr>
     <td colspan="10"> {{ $rows->links() }} </td>

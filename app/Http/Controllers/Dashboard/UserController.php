@@ -2,30 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Requests\UserRequest;
-use App\Models\UserNormal;
 use App\Services\UserService;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 
-class UserController extends Controller
+class UserController extends DashboardController
 {
-    public function index()
-    {
-        if (request()->ajax()) {
-            $rows = UserNormal::filter();
-            return response()->json([
-                'count' => $rows->count(),
-                'view'  => view('dashboard.users.includes.rows', ['rows' => $rows->paginate( request()->get('limit', 1) )])->render(),
-            ]);
-        }
-        return view('dashboard.users.index');
-    }
-
-    public function create()
-    {
-        return view('dashboard.users.create');
-    }
+    protected string $folder = 'users';
+    protected string $model  = 'App\\Models\\UserNormal';
 
     public function store(UserRequest $request, UserService $service)
     {
@@ -34,11 +20,6 @@ class UserController extends Controller
         return $row instanceof Exception
                 ? response()->json($row, 500)
                 : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
-    }
-
-    public function edit(UserNormal $user)
-    {
-        return view('dashboard.users.update', ['row' => $user]);
     }
 
     public function update(UserRequest $request, UserService $service, $user)
@@ -50,9 +31,8 @@ class UserController extends Controller
                 : response()->json(['message' => 'تم تعديل اليوزر بنجاح'], 200);
     }
 
-    public function destroy(UserNormal $user)
+    protected function query(?int $id = null): Builder
     {
-        $user->delete();
-        return response()->json(['message' => 'تم حذف اليوزر بنجاح'], 200);
+        return $this->model::filter()->when($id, fn($query) => $query->where('id', $id))->where('id', '<>', auth()->id());
     }
 }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Unique;
 
-class UnitRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +22,23 @@ class UnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:units,name,'.$this->route('unit').',id,shop_id,'.shopId()
+            'name' => 'required|string|unique:categories,name,'.$this->route('category').',id,shop_id,'.shopId(),
+            'category_id' => 'nullable|exists:categories,id,shop_id,'.shopId(),
+            'is_show'     => 'required|boolean',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'الوحده',
+            'name' => 'Name',
+            'category_id' => 'Category',
+            'is_show' => 'Show',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ( is_null( $this->is_show ) ) $this->merge(['is_show' => false]);
     }
 }
