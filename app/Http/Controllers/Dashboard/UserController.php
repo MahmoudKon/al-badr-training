@@ -10,12 +10,12 @@ use App\Models\UserDashboard;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     public function index()
      {
         if (request()->ajax()) {
