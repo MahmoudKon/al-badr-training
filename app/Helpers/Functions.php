@@ -11,7 +11,7 @@ if( !function_exists('checkRoute') ) {
     function checkRoute(string $route, bool|string $returned = true): bool|string
     {
         $route = $route ? '.'.trim($route, '.') : '';
-        return request()->routeIs("dashboard{$route}") ? $returned : false;
+        return request()->routeIs(env('ROUTE_PREFIX')."{$route}") ? $returned : false;
     }
 }
 
@@ -19,6 +19,6 @@ if( !function_exists('routeHelper') ) {
     function routeHelper(string|null $route, object|array|string|int|null $options = null) :string
     {
         if (! $route || $route == '#') return '';
-        return route("dashboard.$route", $options);
+        return route(env('ROUTE_PREFIX').".$route", $options);
     }
 }

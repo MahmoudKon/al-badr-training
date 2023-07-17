@@ -8,13 +8,13 @@
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
         <td>
-            <a href="{{ route('dashboard.units.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
+            <a href="{{ routeHelper('units.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
         <td>
-            <form action="{{ route('dashboard.units.destroy', $row) }}" method="post" class="submit-form">
+            <form action="{{ routeHelper('units.destroy', $row) }}" method="post" class="submit-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">

@@ -50,8 +50,6 @@ class CategoryController extends DashboardController
         $ids[] = $id;
         $row = Category::with('subs')->where('id', $id)->first();
         $this->getUniqeIds($ids, $row->subs);
-        $row = Category::with('subs')->where('id', $id)->first();
-
         return $ids;
     }
 

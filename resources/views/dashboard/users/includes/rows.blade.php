@@ -9,13 +9,13 @@
         <td> {{ $row->name }} </td>
         <td> {{ $row->email }} </td>
         <td>
-            <a href="{{ route('dashboard.users.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
+            <a href="{{ routeHelper('users.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
         <td>
-            <form action="{{ route('dashboard.users.destroy', $row) }}" method="post" class="submit-form">
+            <form action="{{ routeHelper('users.destroy', $row) }}" method="post" class="submit-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">
