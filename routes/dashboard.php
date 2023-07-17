@@ -13,3 +13,6 @@ Route::resource('categories', 'CategoryController');
 
 Route::resource('shops', 'ShopController');
 
+Route::resource('clients', 'ClientsController');
+
+
