@@ -18,6 +18,8 @@
                         <th class="w-1">No.</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Permission</th>
+                        <th>Show</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

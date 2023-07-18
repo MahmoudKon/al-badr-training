@@ -8,6 +8,13 @@
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
         <td> {{ $row->email }} </td>
+        <td> Can >> {{ $row->role?$row->role: 'just read' }} </td>
+        <td>
+            <a href="{{ route('dashboard.users.show', $row) }}" class="btn btn-sm btn-success">
+                Show
+                <i class="fas fa-eye"></i>
+            </a>
+        </td>
         <td>
             <a href="{{ route('dashboard.users.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit

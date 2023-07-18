@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
+use Illuminate\Http\Request;
 use Exception;
 
 class CategoryController extends DashboardController
@@ -35,6 +36,14 @@ class CategoryController extends DashboardController
     {
         $category->update(['is_show' => !$category->is_show]);
         return response()->json(['message' => 'تم تعديل حالة التصنيف بنجاح'], 200);
+    }
+
+    public function multiDelete(Request $r)
+    {
+        if(Category::destroy($r->ids)){
+            return response()->json(['message' => 'تم ازاله  التصنيفات بنجاح'], 200);
+        }
+        return response()->json(['message' => 'العمليه غير صحيحه'], 500);
     }
 
     protected function append(): array

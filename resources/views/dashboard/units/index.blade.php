@@ -17,6 +17,7 @@
                         </th>
                         <th class="w-1">No.</th>
                         <th>Name</th>
+                        <th>Show</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

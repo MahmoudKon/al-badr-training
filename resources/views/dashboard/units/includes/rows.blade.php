@@ -2,11 +2,17 @@
     <tr>
         <td>
             <label class="form-check form-check-single form-switch cursor-pointer p-0">
-                <input class="form-check-input cursor-pointer m-0 align-middle row-checkbox" value="{{ $row->id }}" type="checkbox">
+                <input class="form-check-input cursor-pointer m-0 align-middle row-checkbox" name="ids" value="{{ $row->id }}" type="checkbox">
             </label>
         </td>
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
+        <td>
+            <a href="{{ route('dashboard.units.show', $row) }}" class="btn btn-sm btn-success">
+                Show
+                <i class="fas fa-eye"></i>
+            </a>
+        </td>
         <td>
             <a href="{{ route('dashboard.units.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit

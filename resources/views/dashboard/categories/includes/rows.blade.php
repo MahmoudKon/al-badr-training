@@ -17,6 +17,12 @@
             </form>
         </td>
         <td>
+            <a href="{{ route('dashboard.categories.show', $row) }}" class="btn btn-sm btn-success">
+                Show
+                <i class="fas fa-eye"></i>
+            </a>
+        </td>
+        <td>
             <a href="{{ route('dashboard.categories.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>

@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::group(['middleware'=>'auth:web'], function($route){
+
 Route::view('/', 'layouts.dashboard')->name('index');
 
-Route::resource('users', 'UserController');
+Route::resource('users', 'UserController')->middleware('IfAuthrized');
 Route::post('users/multi-delete', 'UserController@multiDelete')->name('users.multi-delete');
 
 Route::resource('units', 'UnitController');
@@ -20,3 +22,5 @@ Route::controller('ShopController')->as('shop.')->prefix('shop')->group(function
     Route::post('/', 'store')->name('store');
     Route::delete('/', 'destroy')->name('destroy');
 });
+
+}); // routegroup

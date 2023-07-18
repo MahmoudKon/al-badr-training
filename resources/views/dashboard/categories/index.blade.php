@@ -18,6 +18,7 @@
                         <th class="w-1">No.</th>
                         <th>Name</th>
                         <th>Is Show</th>
+                        <th>Show</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -34,6 +35,23 @@
             $('body').on('change', '.change-status', function() {
                 $(this).closest('form').submit();
             });
+            // $('input').on('click',function(){
+            //     var arry =[];
+            //     $('input:checked').each(function(){
+            //         arry.push($(this).val());
+            //     });
+            // });
+            // $.ajax({
+            //     type: "post",
+            //     url: "dashboard/categories/multi-delete",
+            //     data:{
+            //         _token:"{{csrf_token()}}",
+            //         categories:arry,
+            //     },success: function(data){
+            //         console.log(data.message);
+            //     }
+            // });
         });
+
     </script>
 @endsection
