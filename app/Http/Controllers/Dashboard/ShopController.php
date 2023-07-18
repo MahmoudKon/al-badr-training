@@ -2,29 +2,38 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\Shop;
 use Illuminate\Http\Request;
+use App\Http\Requests\ShopRequest;
+use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
 
     public function index()
     {
-        return view('dashboard.shops.index');
+        $row = Shop::first();
+        return view('dashboard.shops.index', compact('row'));
     }
 
-
-    public function edit(string $id)
+    public function store(ShopRequest $request)
     {
+        try {
+            $row = Shop::first();
+            $row->update($request->validated());
+            return response()->json(['message' => 'تم حفظ البيانات'], 200);
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 
-
-    public function update(Request $request, string $id)
+    public function destroy()
     {
-    }
-
-
-    public function destroy(string $id)
-    {
+        $row = Shop::first();
+        $row->forcedelete();
+        session()->flash('success', 'تم حذف جميع بيانات المؤسسة بنجاح');
+        auth()->logout();
+        return redirect()->route('login');
     }
 }

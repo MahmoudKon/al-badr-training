@@ -1,10 +1,19 @@
+
 $(function () {
+    let table = $('#load-table');
     let run_ajax = {
         abort: function () { }
     };
     let active_page_link = window.location.href;
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     function loadTable(url = null) {
+        if ($('#load-table').lenght == 0) return;
         run_ajax.abort();
         $('#load-table').parent().addClass('load');
         run_ajax = $.ajax({
@@ -56,10 +65,6 @@ $(function () {
         })
     });
 
-    $('body').on('click', '.delete-row', function (e) {
-        e.preventDefault();
-        if (confirm('هل انت متاكد من عملية الحذف')) $(this).closest('form').submit();
-    });
 
     $('body').on('submit', '.submit-form', function (e) {
         e.preventDefault();
@@ -88,5 +93,38 @@ $(function () {
         })
     });
 
-    loadTable();
+    $('body').on('click', '.delete-row, #delete-rows', function (e) {
+        e.preventDefault();
+        if (confirm('هل انت متاكد من عملية الحذف')) $(this).closest('form').submit();
+    });
+
+    //multidelete
+    // <!--CHECKEDBOX-->
+    $('body').on('submit', '#multi-delete', function (e) {
+        e.preventDefault();
+        let ids = [];
+
+        $.each($('body').find('.row-checkbox:checked'), function () {
+            ids.push($(this).val());
+        });
+
+        if (ids.length == 0) {
+            alert('يرجي اختيار بيانات لحذفها');
+            return;
+        }
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: { ids: ids },
+            success: function (response) {
+                showAlert(success_alert, response.message);
+                loadTable(active_page_link);
+            },
+            error: function (jqXHR) { handleErrors(jqXHR); },
+        });
+    });
+
+    if (table.length > 0) loadTable();
+
 });

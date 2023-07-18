@@ -6,29 +6,16 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Requests\CategoryRequest;
 use Exception;
 
-class CategoryController extends Controller
+class CategoryController extends DashboardController
 {
+    protected string $view = 'categories';
+    protected string $model = 'App\\Models\\Category';
 
-    public function index()
-    {
-        if (request()->ajax()) {
-            $rows = Category::filter();
-            return response()->json([
-                'count' => $rows->count(),
-                'view'  => view('dashboard.categories.includes.rows', ['rows' => $rows->paginate(request()->get('limit', 1))])->render(),
-            ]);
-        }
-        return view('dashboard.categories.index');
-    }
 
-    public function create()
-    {
-        $categories = Category::all();
-        return view('dashboard.categories.create', compact('categories'));
-    }
 
     public function store(CategoryRequest $request, CategoryService $service)
     {
@@ -38,11 +25,7 @@ class CategoryController extends Controller
             : response()->json(['message' => 'تم انشاء الصنف بنجاح'], 200);
     }
 
-    public function edit(Category $category)
-    {
-        $categories = Category::mainCategory($category->id);
-        return view('dashboard.categories.update', ['row' => $category, 'categories' => $categories]);
-    }
+
     public function update(CategoryRequest $request, CategoryService $service, $category)
     {
         $row = $service->handel($request->validated(), $category);
@@ -51,12 +34,29 @@ class CategoryController extends Controller
             : response()->json(['message' => 'تم تعديل الصنف بنجاح'], 200);
     }
 
-    public function destroy(Category $category)
+
+    protected function append(): array
     {
-        if ($category->child->count() > 0) {
-            return response()->json(['message' => 'هذا الصنف لديه أبناء'], 500);
+        return [
+            'categories' => Category::select('id', 'name')->whereNotIn('id', $this->getCats(request()->get('category')))->pluck('name', 'id')
+        ];
+    }
+
+    protected function getCats(?int $id = null)
+    {
+        if (is_null($id)) return [];
+        $ids[] = $id;
+        $row = Category::with('child')->where('id', $id)->first();
+        $this->getUniqeIds($ids, $row->subs);
+
+        return $ids;
+    }
+
+    protected function getUniqeIds(array &$ids, $subs)
+    {
+        foreach ($subs as $sub) {
+            $ids[] = $sub->id;
+            $this->getUniqeIds($ids, $sub->subs);
         }
-        $category->delete();
-        return redirect()->route('dashboard.categories.index');
     }
 }

@@ -12,11 +12,11 @@
     <div class="mb-3">
         <div class="form-label">Select Parent</div>
         <select class="form-select" name="category_id">
-            <option value="0"{{ request()->get('category_id') == 0 ? 'selected' : '' }}>Main Category</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}"
-                    {{ request()->get('category_id') == $category->id || (isset($row) && $category->id == $row->category_id) ? 'selected' : '' }}>
-                    {{ $category->name }}</option>
+            <option value=""{{ request()->get('category_id') == 0 ? 'selected' : '' }}>Main Category</option>
+
+            @foreach ($categories as $id => $name)
+                <option value="{{ $id }}" {{ isset($row) && $row->category_id == $id ? 'selected' : '' }}>
+                    {{ $name }}</option>
             @endforeach
 
         </select>

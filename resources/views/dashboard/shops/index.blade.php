@@ -1,82 +1,56 @@
 @extends('layouts.dashboard')
-@section('content')
-    <!-- Page header -->
-    <div class="page-header d-print-none">
-        <div class="container-xl">
-            <div class="row g-2 align-items-center">
-                <div class="col">
-                    <h2 class="page-title">
-                        المتاجر
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Page body -->
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">بيانات المتاجر</h3>
-            </div>
-            <div class="card-body border-bottom py-3">
-                <div class="d-flex">
-                    <div class="text-muted">
-                        Show
-                        <div class="mx-2 d-inline-block">
-                            <input type="text" class="form-control form-control-sm" value="8" size="3"
-                                aria-label="Invoices count">
-                        </div>
-                        entries
-                    </div>
-                    <div class="ms-auto text-muted">
-                        بحث:
-                        <div class="ms-2 d-inline-block">
-                            <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap datatable">
-                    <thead>
-                        <tr>
-                            <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox"
-                                    aria-label="Select all invoices"></th>
-                            <th>الاسم</th>
-                            <th>العنوان</th>
-                            <th>رقم الهاتف</th>
-                            <th>الحالة</th>
-                            <th>العمليات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        <tr>
-                            <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                    aria-label="Select invoice"></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>
-                                <span class="dropdown">
-                                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
-                                        data-bs-toggle="dropdown">العمليات</button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="{{ route('dashboard.shops.edit', ['shop' => 1]) }}">
-                                            تعديل
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('dashboard.shops.destroy', ['shop' => 1]) }}">
-                                            حذف
-                                        </a>
-                                    </div>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+@section('content')
+    <div class="card">
+        <div class="card-header justify-content-between">
+            <h3 class="card-title">
+                Settings
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <form action="{{ routeHelper('store') }}" class="submit-form" method="post">
+                @csrf
+
+                <div class="form-group mb-3">
+                    <label class="form-label required">Shop Name</label>
+                    <div class="input-icon">
+                        <input type="text" value="{{ $row->name ?? '' }}" name="name" class="form-control" placeholder="Shop Name..." autofocus>
+                        <span class="input-icon-addon"> <i class="fa-solid fa-building"></i> </span>
+                    </div>
+                    @include('layouts.includes.dashboard.validation-error', ['input' => 'name'])
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label required">Address</label>
+                    <div class="input-icon">
+                        <input type="text" value="{{ $row->address ?? '' }}" name="address" class="form-control" placeholder="Address..." autofocus>
+                        <span class="input-icon-addon"> <i class="fa-solid fa-location-dot"></i> </span>
+                    </div>
+                    @include('layouts.includes.dashboard.validation-error', ['input' => 'address'])
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label required">Phone</label>
+                    <div class="input-icon">
+                        <input type="text" value="{{ $row->phone ?? '' }}" name="phone" class="form-control" placeholder="Phone..." autofocus>
+                        <span class="input-icon-addon"> <i class="fa-solid fa-phone"></i> </span>
+                    </div>
+                    @include('layouts.includes.dashboard.validation-error', ['input' => 'phone'])
+                </div>
+
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-info"> Save <i class="fas fa-save"></i> </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <form method="post" action="{{ routeHelper('destroy') }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger delete-row"> Delete Every Thing <i class="fas fa-trash"></i> </button>
+            </form>
         </div>
     </div>
 @endsection

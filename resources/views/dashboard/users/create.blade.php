@@ -4,7 +4,7 @@
     </div>
 
 
-    <form action="{{ route('dashboard.users.store') }}" class="submit-form" method="post">
+    <form action="{{ routeHelper('users.store') }}" class="submit-form" method="post">
         @include('dashboard.users.includes.inputs')
     </form>
 </div>

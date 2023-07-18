@@ -2,35 +2,8 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header justify-content-between">
-            <h3 class="card-title">
-                {{ $title }}
-                <span id="show-count"></span>
-            </h3>
-            <a href="{{ route('dashboard.users.create') }}" class="btn btn-sm btn-primary open-modal float-left">انشاء مستخدم
-                <i class="fas fa-plus"></i></a>
-        </div>
-
-        <div class="card-body border-bottom py-3">
-            <div class="d-flex">
-                <div class="text-muted">
-                    Show
-                    <div class="mx-2 d-inline-block">
-                        <input type="text" class="form-control form-control-sm" value="" id="limit"
-                            size="3" aria-label="Invoices count">
-                    </div>
-                    entries
-                </div>
-                <div class="ms-auto text-muted">
-                    Search:
-                    <div class="ms-2 d-inline-block">
-                        <input type="text" class="form-control form-control-sm" id="search"
-                            aria-label="Search invoice">
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        @include('dashboard.includes.page-header')
+        @include('dashboard.includes.filter')
         <div class="table-responsive">
             <table class="table card-table table-vcenter text-nowrap datatable">
                 <thead>

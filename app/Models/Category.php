@@ -16,20 +16,20 @@ class Category extends Model
 
     public function shop()
     {
-        return $this->belongsTo(Shop::class, 'shop_id', 'id')->select('id', 'name');
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
 
     public function child()
     {
-        return $this->hasMany(Category::class, 'category_id');
+        return $this->hasMany(Category::class, 'category_id')->select('id', 'name', 'category_id')->with('child');
     }
 
     public function parent()
     {
-        return $this->belongsTo(Category::class, 'category_id')->withDefault('MainCategory');
+        return $this->belongsTo(Category::class, 'category_id')->select('id', 'name', 'category_id');
     }
 
-    public static  function mainCategory(int $category = null)
+    public static  function mainCategory(int $category )
     {
         return self::where('id', '<>', $category)->where('category_id', 0)->get();
     }

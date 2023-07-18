@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('is_show')->default(false)->comment("To Show His Items In Sale Page");
             $table->string('name');
+            $table->string('phone');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::enableForeignKeyConstraints();
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('clients');
         Schema::disableForeignKeyConstraints();
     }
 };

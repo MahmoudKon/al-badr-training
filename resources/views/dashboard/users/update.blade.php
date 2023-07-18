@@ -4,7 +4,7 @@
     </div>
 
 
-    <form action="{{ route('dashboard.users.update', $row) }}" class="submit-form" method="post">
+    <form action="{{ routeHelper('users.update', $row) }}" class="submit-form" method="post">
         @method('PUT')
         @include('dashboard.users.includes.inputs')
     </form>
