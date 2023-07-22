@@ -19,7 +19,7 @@ class UserController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row created', ['model' => trans('menu.'.$this->getModule(true))])], 200);
     }
 
     public function update(UserRequest $request, UserService $service, $user)
@@ -28,11 +28,11 @@ class UserController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم تعديل اليوزر بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row updated', ['model' => trans('menu.'.$this->getModule(true))])], 200);
     }
 
     protected function query(?int $id = null): Builder
     {
-        return $this->model::filter()->when($id, fn($query) => $query->where('id', $id))->where('id', '<>', auth()->id());
+        return $this->model::filter()->when($id, fn($query) => $query->where('id', $id));
     }
 }

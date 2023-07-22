@@ -18,7 +18,7 @@ class UnitController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row created', ['model' => $this->getModule(true)])], 200);
     }
 
     public function update(UnitRequest $request, UnitService $service, $unit)
@@ -27,7 +27,7 @@ class UnitController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم تعديل الوحده بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row updated', ['model' => $this->getModule(true)])], 200);
     }
 }
 

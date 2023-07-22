@@ -19,7 +19,7 @@ class CategoryController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء تصنيف بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row created', ['model' => $this->getModule(true)])], 200);
     }
 
     public function update(CategoryRequest $request, CategoryService $service, $category)
@@ -28,13 +28,13 @@ class CategoryController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم تعديل التصنيف بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row updated', ['model' => $this->getModule(true)])], 200);
     }
 
     public function toggleStatus(Category $category)
     {
         $category->update(['is_show' => !$category->is_show]);
-        return response()->json(['message' => 'تم تعديل حالة التصنيف بنجاح'], 200);
+        return response()->json(['message' => trans('flash.change status', ['model' => $this->getModule(true)])], 200);
     }
 
     protected function append(): array

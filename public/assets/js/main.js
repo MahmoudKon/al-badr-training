@@ -20,11 +20,10 @@ $(function() {
         if (table.length == 0) return ;
 
         run_ajax.abort();
-
         run_ajax = $.ajax({
             url: url ?? window.location.href,
             type: "GET",
-            data: {limit: $('#limit').val(), search: $('#search').val()},
+            data: {limit: $('#limit').val(), filter: $('#search').val()},
             beforeSend: function (jqHXR) { table.closest('.card').addClass('load'); },
             success: function(response) {
                 table.empty().append(response.view);
@@ -59,7 +58,6 @@ $(function() {
             success: function(response) {
                 modal.modal('show').find('.modal-body').append(response);
                 modal.find('.select2').select2();
-                console.log(modal.find('.select2'));
             },
             error: function(jqXHR) { handleErrors(jqXHR); },
             complete: function (jqXHR, textStatus) { modal.modal('hide'); }
@@ -161,4 +159,14 @@ $(function() {
 
     // Call Functionp
     if (table.length > 0) loadTable();
+
+    $('body').on('change', '.change-status', function() {
+        $(this).closest('form').submit();
+    });
+
+    $('body').on('click', '.nav-options', function(e) {
+        e.preventDefault();
+        $(this).toggleClass('show').next('.dropdown-menu').toggleClass('show');
+        console.log('asdasd');
+    });
 });

@@ -7,7 +7,14 @@
 
     @if (App::isLocale('ar'))
         @vite(['resources/css/app-rtl.css'])
+        <style>
+            .navbar-expand-md .navbar-nav .dropdown-menu {top: 50px; left: 50px;}
+            .dropdown-menu-arrow:before { transform: rotate(46deg); }
+        </style>
     @else
         @vite(['resources/css/app-ltr.css'])
+        <style>
+            .navbar-expand-md .navbar-nav .dropdown-menu {top: 50px; right: 50px;}
+        </style>
     @endif
 </head>

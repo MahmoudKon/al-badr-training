@@ -31,7 +31,7 @@ class UnitRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'الوحده',
+            'name' => trans('units.name'),
         ];
     }
 }

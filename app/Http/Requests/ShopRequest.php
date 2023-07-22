@@ -31,9 +31,9 @@ class ShopRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'Name',
-            'address' => 'Address',
-            'phone' => 'Phone',
+            'name' => trans('shops.name'),
+            'address' => trans('shops.address'),
+            'phone' => trans('shops.phone'),
         ];
     }
 }

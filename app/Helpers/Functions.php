@@ -22,3 +22,15 @@ if( !function_exists('routeHelper') ) {
         return route(env('ROUTE_PREFIX').".$route", $options);
     }
 }
+
+if( !function_exists('getModule') ) {
+    function getModule(bool $singular = false) :string
+    {
+        try {
+            return request()->route()->getController()->getModule($singular);
+        } catch (Exception $e) {
+            dd($e);
+            return env('ROUTE_PREFIX');
+        }
+    }
+}

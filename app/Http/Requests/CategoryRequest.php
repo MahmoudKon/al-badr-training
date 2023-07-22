@@ -31,9 +31,9 @@ class CategoryRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'Name',
-            'category_id' => 'Category',
-            'is_show' => 'Show',
+            'name'        => trans('categories.name'),
+            'category_id' => trans('menu.the category'),
+            'is_show'     => trans('categories.is_show'),
         ];
     }
 

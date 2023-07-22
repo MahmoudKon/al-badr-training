@@ -20,7 +20,7 @@ class ShopController extends Controller
         try {
             $row = Shop::first();
             $row->update($request->validated());
-            return response()->json(['message' => 'تم حفظ البيانات'], 200);
+            return response()->json(['message' => trans('shops.data-saved')], 200);
         } catch(Exception $e) {
             return response()->json($e, 500);
         }
@@ -30,7 +30,7 @@ class ShopController extends Controller
     {
         $row = Shop::first();
         $row->delete();
-        session()->flash('success', 'تم حذف جميع بيانات المؤسسة بنجاح');
+        session()->flash('success', trans('shops.account-deleted'));
         auth()->logout();
         return redirect()->route('login');
     }

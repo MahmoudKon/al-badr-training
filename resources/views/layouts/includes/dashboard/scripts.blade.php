@@ -10,6 +10,8 @@
 <script type="text/javascript" src="{{ asset('assets/js/demo.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
 
+@vite(['resources/js/app.js'])
+
 @yield('js')
 @stack('js')
 

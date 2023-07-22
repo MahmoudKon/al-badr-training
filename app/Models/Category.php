@@ -26,7 +26,7 @@ class Category extends Model
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('name'), fn($query, $name) => $query->where('name', 'LIKE', "%$name%"));
+        return $builder->when(request()->get('filter'), fn($query, $filter) => $query->where('name', 'LIKE', "%$filter%"));
     }
 
     protected static function booted(): void
