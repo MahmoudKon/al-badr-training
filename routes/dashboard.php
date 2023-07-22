@@ -2,6 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+ Route::get('/', function () {
+    return view('auth.login') ;
+});
+
+Route::prefix('admin')->group(function () {
+  Route::view('/', 'layouts.dashboard')->name('index');
+
+   
+  });
+ 
+
+
 Route::view('/', 'layouts.dashboard')->name('index');
 
 Route::resource('users', 'UserController');
@@ -13,7 +26,10 @@ Route::post('units/multi-delete', 'UnitController@multiDelete')->name('units.mul
 Route::resource('categories', 'CategoryController');
 Route::post('categories/{category}/toggle/status', 'CategoryController@toggleStatus')->name('categories.toggle.status');
 Route::post('categories/multi-delete', 'CategoryController@multiDelete')->name('categories.multi-delete');
+Route::get('categories/list/parents', 'CategoryController@parents')->name('categories.parents');
 
+Route::resource('clients', 'ClientsController');
+Route::post('clients/multi-delete', 'ClientsController@multiDelete')->name('clients.multi-delete');
 
 Route::controller('ShopController')->as('shop.')->prefix('shop')->group(function() {
     Route::get('/', 'index')->name('index');

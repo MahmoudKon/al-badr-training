@@ -9,6 +9,8 @@ class DashboardController extends Controller
 {
     protected string $folder;
     protected string $model;
+    protected string $main = "dashboard";
+    public bool $button_ajax = false;
 
     public function index()
     {
@@ -16,15 +18,18 @@ class DashboardController extends Controller
             $rows = $this->query();
             return response()->json([
                 'count' => $rows->count(),
-                'view'  => view("dashboard.{$this->folder}.includes.rows", ['rows' => $rows->paginate( request()->get('limit', 1) )])->render(),
+                'view'  => view("dashboard.{$this->folder}.includes.rows", 
+                ['rows' => $rows->paginate( request()->get('limit', 1) )])->render(),
             ]);
         }
-        return view("dashboard.{$this->folder}.index");
+        return view("dashboard.{$this->folder}.index", [ 'button_ajax' => $this->button_ajax]);
     }
 
     public function create()
     {
-        return view("dashboard.{$this->folder}.create", $this->append());
+        if (request()->ajax())
+            return view("dashboard.{$this->folder}.create", $this->append());
+        return view("dashboard.includes.create", $this->append());
     }
 
     public function edit($id)

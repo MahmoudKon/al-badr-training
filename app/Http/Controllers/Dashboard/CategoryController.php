@@ -13,6 +13,12 @@ class CategoryController extends DashboardController
     protected string $folder = 'categories';
     protected string $model  = 'App\\Models\\Category';
 
+    public function parents()
+    {
+        $rows = Category::whereNull('category_id')->with('subs')->get();
+        return view('dashboard.categories.show', compact('rows'));
+    }
+
     public function store(CategoryRequest $request, CategoryService $service)
     {
         $row = $service->handel($request->validated());
@@ -21,7 +27,7 @@ class CategoryController extends DashboardController
                 ? response()->json($row, 500)
                 : response()->json(['message' => 'تم انشاء تصنيف بنجاح'], 200);
     }
-
+    
     public function update(CategoryRequest $request, CategoryService $service, $category)
     {
         $row = $service->handel($request->validated(), $category);

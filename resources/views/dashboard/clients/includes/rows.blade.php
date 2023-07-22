@@ -7,15 +7,14 @@
         </td>
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
-        <td> {{ $row->email }} </td>
         <td>
-            <a href="{{ route('dashboard.users.edit', $row) }}" class="btn btn-sm btn-primary">
+            <a href="{{ route('dashboard.clients.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
         <td>
-            <form action="{{ route('dashboard.users.destroy', $row) }}" method="post" class="submit-form">
+            <form action="{{ route('dashboard.clients.destroy', $row) }}" method="post" class="submit-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">

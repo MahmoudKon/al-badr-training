@@ -19,6 +19,6 @@ if( !function_exists('routeHelper') ) {
     function routeHelper(string|null $route, object|array|string|int|null $options = null) :string
     {
         if (! $route || $route == '#') return '';
-        return route("dashboard.$route", $options);
+        return route(env('ROUTE_PREFIX').".$route", $options);
     }
 }

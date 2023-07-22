@@ -158,7 +158,6 @@ $(function() {
             });
         }, 5000);
     }
-
     // Call Function
     if (table.length > 0) loadTable();
 });
