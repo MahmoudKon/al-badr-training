@@ -17,13 +17,13 @@
             </form>
         </td>
         <td>
-            <a href="{{ route('dashboard.categories.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
+            <a href="{{ routeHelper('categories.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
                 Edit
                 <i class="fas fa-edit"></i>
             </a>
         </td>
         <td>
-            <form action="{{ route('dashboard.categories.destroy', $row) }}" method="post" class="submit-form">
+            <form action="{{ routeHelper('categories.destroy', $row) }}" method="post" class="submit-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger delete-row">

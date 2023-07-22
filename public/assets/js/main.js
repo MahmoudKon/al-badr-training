@@ -158,6 +158,11 @@ $(function() {
             });
         }, 5000);
     }
+<<<<<<< HEAD
     // Call Function
+=======
+
+    // Call Functionp
+>>>>>>> d4c9bab4edcd38e394e222098de75ad24d61cf4c
     if (table.length > 0) loadTable();
 });

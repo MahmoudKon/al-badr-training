@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -41,7 +42,7 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         $this->query($id)->delete();
-        return response()->json(['message' => 'تم حذف البيانات بنجاح'], 200);
+        return response()->json(['message' => 'تم حذف '.Str::singular($this->folder).' بنجاح'], 200);
     }
 
     public function multiDelete(Request $request)
