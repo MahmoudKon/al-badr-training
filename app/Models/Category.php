@@ -14,6 +14,8 @@ class Category extends Model
 
     protected $fillable = ['name', 'is_show', 'shop_id', 'category_id'];
 
+    protected $with = ['parent'];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id')->select('id', 'name', 'category_id');
@@ -22,6 +24,11 @@ class Category extends Model
     public function subs()
     {
         return $this->hasMany(Category::class, 'category_id')->select('id', 'name', 'category_id')->with('subs');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function scopeFilter(Builder $builder): Builder

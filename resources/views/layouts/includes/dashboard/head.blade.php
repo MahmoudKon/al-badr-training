@@ -17,4 +17,7 @@
             .navbar-expand-md .navbar-nav .dropdown-menu {top: 50px; right: 50px;}
         </style>
     @endif
+
+    @yield('css')
+    @stack('css')
 </head>

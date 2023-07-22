@@ -7,6 +7,7 @@
         </td>
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
+        <td> {{ $row->parent?->name }} </td>
         <td>
             <form method="post" action="{{ routeHelper('categories.toggle.status', $row) }}" class="submit-form">
                 @csrf
@@ -15,6 +16,9 @@
                     <input class="form-check-input cursor-pointer change-status" type="checkbox" @checked($row->is_show)>
                 </label>
             </form>
+        </td>
+        <td>
+            @include('dashboard.includes.buttons.show',  ['id' => $row->id, 'class' => 'open-modal'])
         </td>
         <td>
             @include('dashboard.includes.buttons.edit',  ['id' => $row->id])
