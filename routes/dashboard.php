@@ -3,15 +3,15 @@
 use Illuminate\Support\Facades\Route;
 
 
- Route::get('/', function () {
-    return view('auth.login') ;
-});
+//  Route::get('/', function () {
+//     return view('auth.login') ;
+// });
 
-Route::prefix('admin')->group(function () {
-  Route::view('/', 'layouts.dashboard')->name('index');
+// Route::prefix('admin')->group(function () {
+//   Route::view('/', 'layouts.dashboard')->name('index');
 
    
-  });
+//   });
  
 
 
@@ -36,3 +36,6 @@ Route::controller('ShopController')->as('shop.')->prefix('shop')->group(function
     Route::post('/', 'store')->name('store');
     Route::delete('/', 'destroy')->name('destroy');
 });
+
+Route::resource('stores', 'storesController');
+Route::post('stores/multi-delete', 'storesController@multiDelete')->name('stores.multi-delete');
