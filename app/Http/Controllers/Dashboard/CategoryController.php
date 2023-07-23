@@ -16,6 +16,11 @@ class CategoryController extends DashboardController
     protected string $model = 'App\\Models\\Category';
 
 
+    // public function parents()
+    // {
+    //     $rows=Category::whereNull('category_id')->with('child')->get();
+    //     return $row;
+    // }
 
     public function store(CategoryRequest $request, CategoryService $service)
     {
@@ -33,7 +38,6 @@ class CategoryController extends DashboardController
             ? response()->json($row, 500)
             : response()->json(['message' => 'تم تعديل الصنف بنجاح'], 200);
     }
-
 
     protected function append(): array
     {

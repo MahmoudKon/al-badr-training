@@ -34,8 +34,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             Route::middleware(['web','auth'])
-                ->prefix(env('ROUTE_PREFIX'))
-                ->as(env('ROUTE_PREFIX').'.')
+                ->prefix("dashboard")
+                ->as("dashboard.")
                 ->group(base_path('routes/dashboard.php'));
 
             Route::middleware('web')

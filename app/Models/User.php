@@ -54,7 +54,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id')->select('id', 'name');
     }
-
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
     protected function password(): Attribute
     {
         return Attribute::make(

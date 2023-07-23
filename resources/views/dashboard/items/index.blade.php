@@ -12,7 +12,11 @@
                                 aria-label="Select all invoices"></th>
                         <th class="w-1">No.</th>
                         <th>Name</th>
-                        <th>Parent</th>
+                        <th>Category</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Status</th>
                         <th>Show</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -24,3 +28,5 @@
         </div>
     </div>
 @endsection
+
+

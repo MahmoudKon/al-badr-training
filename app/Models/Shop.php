@@ -13,7 +13,7 @@ class Shop extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'address', 'phone', 'is_active'];
-
+    
     public function user()
     {
         return $this->hasMany(User::class, 'shop_id', 'id');

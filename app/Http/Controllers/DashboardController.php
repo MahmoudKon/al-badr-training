@@ -11,7 +11,6 @@ class DashboardController extends Controller
 {
     protected string $view;
     protected string $model;
-
     public function index()
     {
         if (request()->ajax()) {
@@ -23,7 +22,11 @@ class DashboardController extends Controller
         }
         return view("dashboard.{$this->view}.index");
     }
-
+    public function show($id)
+    {
+        $row = $this->query($id)->first();
+        return view("dashboard.{$this->view}.show", compact('row'));
+    }
     public function create()
     {
         return view("dashboard.{$this->view}.create", $this->append());
@@ -38,7 +41,7 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         $this->query($id)->delete();
-        return redirect()->route('dashboard.categories.index');
+        return redirect()->route("dashboard.{$this->view}.index");
     }
 
     public function multiDelete(Request $request)

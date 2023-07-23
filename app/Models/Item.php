@@ -8,35 +8,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'price', 'description', 'unit_id', 'shop_id', 'category_id', 'is_active'];
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class, 'item_store', 'item_id', 'store_id')->withPivot('quantity');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
 
-    public function child()
-    {
-        return $this->hasMany(Category::class, 'category_id')->select('id', 'name', 'category_id')->with('child');
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(Category::class, 'category_id')->select('id', 'name', 'category_id');
-    }
-
-    public static  function mainCategory(int $category )
-    {
-        return self::where('id', '<>', $category)->where('category_id', 0)->get();
-    }
-
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('search'), fn($query, $name) => $query->where('name', 'LIKE', "%$name%"));
+        return $builder->when(request()->get('search'), fn ($query, $name) => $query->where('name', 'LIKE', "%{$name}%"));
     }
 
     protected static function booted(): void
