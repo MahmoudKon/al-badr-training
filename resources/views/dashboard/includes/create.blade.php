@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="card">
-        @include('dashboard.users.create')
+        {{-- @include('dashboard.users.create') --}}
     </div>
 @endsection
