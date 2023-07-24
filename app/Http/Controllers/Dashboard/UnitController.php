@@ -12,18 +12,20 @@ use Exception;
 
 class UnitController extends BaseController
 {
-
+    protected string $folder = 'units';
+    protected string $model  = 'App\\Models\\Unit';
+    protected string $message = 'الوحده';
     
   
 
-    public function index(Unit $unit){
-       return  $this->indexs($unit, 'units');
-    }
+    // public function index(Unit $unit){
+    //    return  $this->indexs($unit, 'units');
+    // }
 
-    public function create()
-    {
-        return view('dashboard.units.create');
-    }
+    // public function create()
+    // {
+    //     return view('dashboard.units.create');
+    // }
 
    
 

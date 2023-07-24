@@ -43,4 +43,7 @@ class UserController extends BaseController
     public function destroy(UserNormal $user){
         return $this->destroys($user,  "تم حذف اليوزر بنجاح");
     }
+
+
+   
 }

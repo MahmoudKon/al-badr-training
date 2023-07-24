@@ -14,14 +14,17 @@ use Exception;
 
 class CategoryController extends BaseController
 {
+    protected string $folder = 'categories';
+    protected string $model  = 'App\\Models\\Category';
+    protected string $message = 'الصنف';
    
-    public function index(Category $category){
-        return  $this->indexs($category, 'categories');
-     }
+    // public function index(Category $category){
+    //     return  $this->indexs($category, 'categories');
+    //  }
 
-    public function create(){
-        return view('dashboard.categories.create');
-    }
+    // public function create(){
+    //     return view('dashboard.categories.create');
+    // }
 
 
     public function store (CategoryRequest $request, CategoryService $service)

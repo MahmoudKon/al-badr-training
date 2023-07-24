@@ -1,15 +1,15 @@
 <?php
 namespace App\Services;
 
-use App\Models\Client;
+use App\Models\Store;
 use Exception;
 
-class ClientService
+class StoreService
 {
     public function handel(array $data, ?int $id = null)
     {
         try {
-            return Client::updateOrCreate(['id' => $id], $data);
+            return Store::updateOrCreate(['id' => $id], $data);
         } catch(Exception $e) {
             return $e;
         }

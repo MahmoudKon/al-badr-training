@@ -22,9 +22,14 @@ class ClientRequest extends FormRequest
     public function rules(): array
     {
         return [
+
+            'name' => 'required|string|unique:clients,name,'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id,
+            'phone' => 'required|string|unique:clients,phone,'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id
+
+
        
-                'name' => 'required|string'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id,
-                'phone' =>  'required|string'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id,
+                // 'name' => 'required|string'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id,
+                // 'phone' =>  'required|string'.$this->route('client').',id,shop_id,'.auth()->user()->shop_id,
   
         ];
     }
