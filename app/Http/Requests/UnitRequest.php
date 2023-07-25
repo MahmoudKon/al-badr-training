@@ -24,14 +24,14 @@ class UnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:units,name,'.$this->route('unit').',id,shop_id,'.auth()->user()->shop_id
+            'name' => 'required|string|unique:units,name,'.$this->route('unit').',id,shop_id,'.shopId()
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'الوحده',
+            'name' => trans('units.name'),
         ];
     }
 }

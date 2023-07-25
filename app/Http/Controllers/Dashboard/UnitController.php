@@ -2,30 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Requests\UnitRequest;
-use App\Models\Unit;
 use App\Services\UnitService;
 use Exception;
 
-class UnitController extends Controller
+class UnitController extends DashboardController
 {
-    public function index()
-    {
-        if (request()->ajax()) {
-            $rows = Unit::filter();
-            return response()->json([
-                'count' => $rows->count(),
-                'view'  => view('dashboard.units.includes.rows', ['rows' => $rows->paginate( request()->get('limit', 1) )])->render(),
-            ]);
-        }
-        return view('dashboard.units.index');
-    }
-
-    public function create()
-    {
-        return view('dashboard.units.create');
-    }
+    protected string $folder = 'units';
+    protected string $model  = 'App\\Models\\Unit';
 
     public function store(UnitRequest $request, UnitService $service)
     {
@@ -33,12 +18,7 @@ class UnitController extends Controller
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
-    }
-
-    public function edit(Unit $unit)
-    {
-        return view('dashboard.units.update', ['row' => $unit]);
+                : response()->json(['message' => trans('flash.row created', ['model' => $this->getModule(true)])], 200);
     }
 
     public function update(UnitRequest $request, UnitService $service, $unit)
@@ -47,13 +27,7 @@ class UnitController extends Controller
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => 'تم تعديل الوحده بنجاح'], 200);
-    }
-
-    public function destroy(Unit $unit)
-    {
-        $unit->delete();
-        return response()->json(['message' => 'تم حذف الوحده بنجاح'], 200);
+                : response()->json(['message' => trans('flash.row updated', ['model' => $this->getModule(true)])], 200);
     }
 }
 

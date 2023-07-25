@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Scopes\PerShopScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
@@ -13,9 +12,19 @@ class Shop extends Model
 
     protected $fillable = ['name', 'address', 'phone'];
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class, 'shop_id', 'id');
+    }
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class, 'shop_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Unit::class, 'shop_id', 'id');
     }
 
     protected static function booted(): void

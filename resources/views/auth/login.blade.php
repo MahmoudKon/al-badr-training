@@ -9,7 +9,7 @@
 
                 <div class="mb-3">
                     <label class="form-label required">Email address</label>
-                    <input type="text" class="form-control" placeholder="Type your username or email..." name="username" autocomplete="off" value="{{ old('username', env('LOGIN_NAME')) }}">
+                    <input type="text" class="form-control" placeholder="Type your username or email..." name="username" autocomplete="off" value="{{ old('username', env('LOGIN_NAME')) }}" autofocus>
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'username'])
                     @include('layouts.includes.dashboard.validation-error', ['input' => 'email'])
                 </div>

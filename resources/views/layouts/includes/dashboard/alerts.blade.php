@@ -33,7 +33,6 @@
             <span class="text-muted show-alert-message"></span>
         </div>
     </div>
-    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
 </div>
 
 <div id="success-alert"class="alert alert-success alert-dismissible d-none" role="alert">
@@ -45,5 +44,4 @@
             <span class="text-muted show-alert-message"></span>
         </div>
     </div>
-    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
 </div>

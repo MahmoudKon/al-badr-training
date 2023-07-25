@@ -12,11 +12,11 @@ class Unit extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'shop_id'];
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('name'), fn($query, $name) => $query->where('name', 'LIKE', "%$name%"));
+        return $builder->when(request()->get('filter'), fn($query, $filter) => $query->where('name', 'LIKE', "%$filter%"));
     }
 
     protected static function booted(): void
@@ -29,7 +29,7 @@ class Unit extends Model
         parent::boot();
 
         self::creating(function($model) {
-            $model->shop_id = auth()->user()->shop_id;
+            $model->shop_id = shopId($model->shop_id);
         });
     }
 }

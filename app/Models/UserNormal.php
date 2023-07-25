@@ -61,8 +61,8 @@ class UserNormal extends Model
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('search'), function($query, $search) {
-            $query->where('name', 'LIKE', "%$search%")->orWhere('email', 'LIKE', "%$search%");
+        return $builder->when(request()->get('filter'), function($query, $filter) {
+            $query->where('name', 'LIKE', "%$filter%")->orWhere('email', 'LIKE', "%$filter%");
         });
     }
 
@@ -81,7 +81,7 @@ class UserNormal extends Model
         parent::boot();
 
         self::creating(function($model) {
-            $model->shop_id = $model->shop_id ?? auth()->user()->shop_id;
+            $model->shop_id = shopId($model->shop_id);
         });
     }
 }
