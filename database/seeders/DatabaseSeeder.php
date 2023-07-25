@@ -18,7 +18,19 @@ class DatabaseSeeder extends Seeder
                             ->has(\App\Models\User::factory()->count(5))
                             ->has(\App\Models\Unit::factory()->count(5))
                             ->has(\App\Models\Category::factory()->count(5))
+                            ->has(\App\Models\Item::factory()->count(10))
+                            ->has(\App\Models\Store::factory()->count(5))
                             ->create();
+        // Getting all items and saving them to variable is not too good idea.
+        // Instead, get count of rows.
+        $itemsCount = App\Models\Item::count();
+
+        // Populate the pivot table
+        // App\Models\Store::all()->each(function ($store) use ($itemsCount) {
+        //     $store->items()->attach(
+        //         App\Models\Item::all()->random(rand(1, $itemsCount))->pluck('id')->toArray()
+        //     );
+        // });
     }
 
     protected function truncateTables()

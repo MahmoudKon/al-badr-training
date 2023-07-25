@@ -46,6 +46,14 @@ class CategoryController extends DashboardController
         return response()->json(['message' => 'العمليه غير صحيحه'], 500);
     }
 
+    public function subCategory()
+    {
+        $categories = Category::with('subs')->select('name','category_id')->whereNull('category_id')->get();
+
+        return view('dashboard.categories.tree', compact('categories'));
+
+    }
+
     protected function append(): array
     {
         return [
@@ -60,7 +68,8 @@ class CategoryController extends DashboardController
         $row = Category::with('subs')->where('id', $id)->first();
         $this->getUniqeIds($ids, $row->subs);
         $row = Category::with('subs')->where('id', $id)->first();
-
+        // dd($ids);
+        // dd($row);
         return $ids;
     }
 

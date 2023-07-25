@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Scopes\PerShopScope;
 use App\Traits\FilterPerShop;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -28,7 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'shop_id'
+        'shop_id',
+        'role_id',
     ];
 
     /**
@@ -63,5 +65,27 @@ class User extends Authenticatable
         return $this->belongsTo(Shop::class, 'shop_id', 'id')->select('id', 'name');
     }
 
-
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+    /**
+     * hasAbility function using For determine
+     * if that user has access on that route or not
+     * permissions parameter recieve from AuthServiceProvider
+     */
+    public function hasAbility($permissions){
+        $role = $this->role(); // getting role through relation function
+        if($role){
+            foreach($role->permission as $per){
+                if(isset($permissions) && in_array($per, $permissions)){
+                    return true;
+                }elseif(is_string($permissions) && strcmp($permissions, $per) == 0){
+                    return true;
+                }
+            }
+        }else{
+            return false;
+        }
+    }
 }

@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('stores_items', function (Blueprint $table) {
             $table->id();
+            $table->string('quantity');
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('item_id')->constrained('items')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::enableForeignKeyConstraints();
-        Schema::dropIfExists('users');
+            Schema::dropIfExists('stores_items');
         Schema::disableForeignKeyConstraints();
     }
 };

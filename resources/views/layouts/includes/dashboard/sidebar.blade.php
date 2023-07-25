@@ -40,6 +40,22 @@
                     </a>
                 </li>
 
+                <li class="nav-item {{ checkRoute('roles.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('roles.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
+                        <span class="nav-link-title"> Role-permissions </span>
+                    </a>
+                </li>
+
+                <li class="nav-item {{ checkRoute('stores.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('stores.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
+                        <span class="nav-link-title"> Stores </span>
+                    </a>
+                </li>
+
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-user"></i> </span>

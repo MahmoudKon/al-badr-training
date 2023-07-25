@@ -30,5 +30,7 @@ class AdminSeeder extends Seeder
         \App\Models\User::factory(5)->create(['shop_id' => $shop->id]);
         \App\Models\Unit::factory(5)->create(['shop_id' => $shop->id]);
         \App\Models\Category::factory(5)->create(['shop_id' => $shop->id]);
+        \App\Models\Item::factory(5)->create(['shop_id' => $shop->id]);
+        \App\Models\Store::factory(5)->create(['shop_id' => $shop->id]);
     }
 }
