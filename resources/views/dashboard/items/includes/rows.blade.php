@@ -1,26 +1,34 @@
-@foreach ($rows as $row)
+@forelse ($rows as $row)
     <tr>
-        <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
+        <td>
+            <label class="form-check form-check-single form-switch cursor-pointer p-0">
+                <input class="form-check-input cursor-pointer m-0 align-middle row-checkbox" value="{{ $row->id }}" type="checkbox">
+            </label>
+        </td>
         <td> {{ $row->id }} </td>
         <td> {{ $row->name }} </td>
+        <td> {{ $row->category->name }} </td>
+        <td> {{ $row->unit->name }} </td>
+        <td> {{ $row->price }} </td>
+        
         <td>
-            <a href="{{ route('dashboard.units.edit', $row) }}" class="btn btn-sm btn-primary open-modal">
-                تعديل
-                <i class="fas fa-edit"></i>
-            </a>
+            @include('dashboard.includes.buttons.toggle-status',  ['id' => $row->id, 'check' => $row->is_active])
         </td>
         <td>
-            <form action="{{ route('dashboard.units.destroy', $row) }}" method="post" class="submit-form">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger delete-row">
-                    حذف
-                    <i class="fas fa-trash"></i>
-                </button>
-            </form>
+            @include('dashboard.includes.buttons.show',  ['id' => $row->id])
+        </td>
+        <td>
+            @include('dashboard.includes.buttons.edit',  ['id' => $row->id])
+        </td>
+        <td>
+            @include('dashboard.includes.buttons.delete',  ['id' => $row->id])
         </td>
     </tr>
-@endforeach
+@empty
+    <tr>
+        <td colspan="10" class="text-center"> <b> @lang('datatable.zeroRecords') </b> </td>
+    </tr>
+@endforelse
 
 <tr>
     <td colspan="10"> {{ $rows->links() }} </td>

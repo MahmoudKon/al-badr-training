@@ -17,5 +17,8 @@ Route::resource('clients', 'ClientsController');
 
 Route::resource('stores', 'StoreController');
 
+Route::resource('items', 'ItemController');
+
+
 
 
