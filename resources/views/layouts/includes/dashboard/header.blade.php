@@ -30,7 +30,19 @@
                     </svg>
                 </a>
             </div>
-
+            <div class="d-none d-md-flex">
+                @if (app()->isLocale('ar'))
+                    <a href="{{ routeHelper('change.lang', 'en') }}" class="nav-link px-0" title="English"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        EN
+                    </a>
+                @else
+                    <a href="{{ routeHelper('change.lang', 'ar') }}" class="nav-link px-0" title="Arabic"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        AR
+                    </a>
+                @endif
+            </div>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">

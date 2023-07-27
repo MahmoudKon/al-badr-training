@@ -14,24 +14,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserController extends DashboardController
 {
-    public function index()
-     {
-        if (request()->ajax()) {
-            $rows = UserDashboard::filter();
-            return response()->json([
-                'count' => $rows->count(),
-                'view'  => view('dashboard.users.includes.rows', ['rows' => $rows->paginate(request()->get('limit', 1))])->render(),
-            ]);
-        }
-        return view('dashboard.users.index', ['title' => 'قائمة المستخدمين']);
-    }
-
-    public function create()
-    {
-        return view('dashboard.users.create');
-    }
+    protected string $view = 'users';
+    protected string $model = 'App\\Models\\UserDashboard';
+    protected bool $btn_ajax = true;
 
     public function store(UserRequest $request, UserService $service)
     {
@@ -42,10 +29,6 @@ class UserController extends Controller
             : response()->json(['message' => 'تم انشاء اليوزر بنجاح'], 200);
     }
 
-    public function edit(User $user)
-    {
-        return view('dashboard.users.update', ['row' => $user]);
-    }
     public function update(UserRequest $request, UserService $service, $user)
     {
         $row = $service->handel($request->validated(), $user);
@@ -53,12 +36,4 @@ class UserController extends Controller
             ? response()->json($row, 500)
             : response()->json(['message' => 'تم تعديل اليوزر بنجاح'], 200);
     }
-
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return redirect()->route('dashboard.users.index');
-    }
-
-
 }

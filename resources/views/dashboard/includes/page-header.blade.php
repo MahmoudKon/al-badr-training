@@ -5,8 +5,9 @@
     </h3>
     <div>
         <a href="{{ routeHelper(last(explode('/', request()->url())) . '.create') }}"
-            class="btn btn-sm btn-primary open-modal float-left">Create New {{ last(explode('/', request()->url())) }}
-            <i class="fas fa-plus"></i></a>
+            class="btn btn-sm btn-primary {{ $btn_ajax ? 'open-modal' : '' }} float-left">@lang('buttons.create', ['model' => trans('menu.' . getModule(true))]) <i
+                class="fas fa-plus"></i>
+        </a>
         <form method="post" action="{{ routeHelper(last(explode('/', request()->url())) . '.multi-delete') }}"
             class="float-left d-inline" id="multi-delete">
             @csrf

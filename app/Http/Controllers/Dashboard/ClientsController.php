@@ -13,6 +13,7 @@ class ClientsController extends DashboardController
 {
     protected string $view = 'clients';
     protected string $model = 'App\\Models\\Client';
+    protected bool $btn_ajax = true;
 
     public function store(ClientRequest $request, ClientService $service)
     {
@@ -30,5 +31,5 @@ class ClientsController extends DashboardController
             ? response()->json($row, 500)
             : response()->json(['message' => 'تم تعديل الصنف بنجاح'], 200);
     }
-    
+
 }

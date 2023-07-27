@@ -13,6 +13,7 @@ class StoresController extends DashboardController
 {
     protected string $view = 'stores';
     protected string $model = 'App\\Models\\Store';
+    protected bool $btn_ajax = true;
 
     public function store(StoreRequest $request, StoreService $service)
     {

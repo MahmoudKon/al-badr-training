@@ -16,6 +16,7 @@ class ItemsController extends DashboardController
 {
     protected string $view = 'items';
     protected string $model = 'App\\Models\\Item';
+    protected bool $btn_ajax = true;
 
     public function store(ItemRequest $request, ItemService $service)
     {
