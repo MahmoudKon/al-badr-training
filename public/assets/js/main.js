@@ -124,6 +124,14 @@ $(function() {
             error: function(jqXHR) { handleErrors(jqXHR); },
         });
     });
+    // This Event To Handel invoice Data by class invoice-form
+    $('body').on('change', '.invoice-form', function(e){
+        e.preventDefault();
+        let form = $(this);
+        $.ajax({
+            //
+        });
+    });
 
     // This Function To Handle Any Response Error And Show It
     function handleErrors(jqXHR, form = null)

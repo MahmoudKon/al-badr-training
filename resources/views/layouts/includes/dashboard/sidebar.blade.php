@@ -54,7 +54,12 @@
                     </a>
                 </li>
 
-
+                <li class="nav-item {{ checkRoute('items.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('items.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
+                        <span class="nav-link-title"> Items </span>
+                    </a>
+                </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">

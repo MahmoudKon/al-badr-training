@@ -15,6 +15,7 @@ use App\Models\Scopes\PerShopScope;
 use App\Traits\FilterPerShop;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -75,8 +76,9 @@ class User extends Authenticatable
      * permissions parameter recieve from AuthServiceProvider
      */
     public function hasAbility($permissions){
+        // $role = Auth::user()->role();
         $role = $this->role(); // getting role through relation function
-        if($role){
+        if($role){dd($role);
             foreach($role->permission as $per){
                 if(isset($permissions) && in_array($per, $permissions)){
                     return true;

@@ -13,7 +13,7 @@ Route::group(['middleware'=>'auth:web'], function($route){
     Route::post('units/multi-delete', 'UnitController@multiDelete')->name('units.multi-delete');
 
     Route::get('categories/sub-category', 'CategoryController@subCategory')->name('categories.sub-categories');
-    Route::resource('categories', 'CategoryController')->middleware('can:categories');
+    Route::resource('categories', 'CategoryController');//->middleware('can:categories')
     Route::post('categories/{category}/toggle/status', 'CategoryController@toggleStatus')->name('categories.toggle.status');
     Route::post('categories/multi-delete', 'CategoryController@multiDelete')->name('categories.multi-delete');
 
@@ -22,6 +22,10 @@ Route::group(['middleware'=>'auth:web'], function($route){
     Route::post('p/multi-del', 'StoreController@multi')->name('stores.multi-delete');
     Route::resource('roles', 'RoleController');
     Route::post('multi-del', 'RoleController@multi')->name('roles.multi-delete');
+    Route::resource('items', 'ItemController');
+    Route::post('i/multi-del', 'ItemController@multi')->name('items.multi-delete');
+    Route::resource('invoices', 'InvoiceController');
+    Route::post('d/multi-del', 'InvoiceController@multi')->name('invoices.multi-delete');
 
 
 

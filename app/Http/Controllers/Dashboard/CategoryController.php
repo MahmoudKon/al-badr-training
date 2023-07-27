@@ -48,7 +48,7 @@ class CategoryController extends DashboardController
 
     public function subCategory()
     {
-        $categories = Category::with('subs')->select('name','category_id')->whereNull('category_id')->get();
+        $categories = Category::select('name','category_id')->whereNull('category_id')->get();
 
         return view('dashboard.categories.tree', compact('categories'));
 

@@ -9,7 +9,7 @@
                     <li class='tree-diagram__root'>{{$category->name}}</li>
                     @if($category->subs->count())
 
-                        @include('dashboard.categories.tree',['categories'=> $category->subs])
+                        @include('dashboard.categories.tree',[ 'categories'=> [$category->subs] ])
 
                     @endif
                 @endforeach
