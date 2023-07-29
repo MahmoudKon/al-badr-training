@@ -26,6 +26,8 @@ Route::group(['middleware'=>'auth:web'], function($route){
     Route::post('i/multi-del', 'ItemController@multi')->name('items.multi-delete');
     Route::resource('invoices', 'InvoiceController');
     Route::post('d/multi-del', 'InvoiceController@multi')->name('invoices.multi-delete');
+    Route::get('invoice/setting', 'InvoiceController@setting')->name('invoices.setting');
+    Route::get('invoice/print', 'InvoiceController@print')->name('invoices.print');
 
 
 

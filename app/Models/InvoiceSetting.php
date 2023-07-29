@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Invoice extends Model
+class InvoiceSetting extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['client', 'dealing_date', 'invoice_id','items',''];
+    protected $table = "invoice_settings";
+    protected $fillable = [ 'client-name', 'client-address', 'client-email', 'client-phone',
+                            'shop-name', 'shop-address', 'shop-email', 'invoice-id', 'invoice-qr', 'invoice-date'];
 
     public function scopeFilter(Builder $builder): Builder
     {
