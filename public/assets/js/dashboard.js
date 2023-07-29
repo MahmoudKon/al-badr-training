@@ -124,7 +124,15 @@ $(function () {
             error: function (jqXHR) { handleErrors(jqXHR); },
         });
     });
+    
 
+    $('body').on('click', '.removeRow', function () {
+        var id = $(this).attr('data-id');
+        var tr = $(this).closest($('#removeRow' + id).parent().parent());
+        tr.find('td').fadeOut(500, function () {
+            tr.remove();
+        });
+    });
     // This Function To Handle Any Response Error And Show It
     function handleErrors(jqXHR, form = null) {
         if (jqXHR.readyState == 0) return true;

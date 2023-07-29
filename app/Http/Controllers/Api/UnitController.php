@@ -22,7 +22,9 @@ class UnitController extends ApiController
     public function store(UnitRequest $request, UnitService $service)
     {
         $row = $service->handel($request->validated());
+        
         return response()->json([
+            'success' => true,
             'message' => 'تم انشاء الوحدة بنجاح',
             'unit' => new UnitResource($row),
         ], 200);
@@ -32,6 +34,7 @@ class UnitController extends ApiController
     {
         $row = $service->handel($request->validated(), $unit);
         return response()->json([
+            'success' => true,
             'message' => 'تم تعديل الوحدة بنجاح',
             'unit' => new UnitResource($row),
         ], 200);

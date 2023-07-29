@@ -2,16 +2,16 @@
     @csrf
     <div class="mb-3">
         <div class="form-label">اختر العميل</div>
-        <select class="form-select" name="client_id[]">
+        <select class="form-select" id="client_id">
             <option value="">------</option>
             @foreach ($clients as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+                <option data-id="{{ $id }}" value="{{ $id }}">{{ $name }}</option>
             @endforeach
         </select>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]']) --}}
     </div>
 
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         <div class="form-label">تاريخ البيع</div>
         <div class="input-icon">
             <span class="input-icon-addon">
@@ -30,64 +30,66 @@
             </span>
             <input class="form-control" placeholder="Select a date" id="datepicker-icon-prepend" value="2020-06-20" />
         </div>
-    </div>
+    </div> --}}
+
     <div class="mb-3">
         <div class="form-label">الوحدة</div>
-        <select class="form-select" name="unit_id[]" id="un-id">
+        <select class="form-select" " id="unit_id">
             <option value="">------</option>
-            @foreach ($units as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+                                       @foreach ($units as $id=> $name)
+            <option data-id="{{ $id }}" data-name="{{ $name }}" value="{{ $id }}">
+                {{ $name }}</option>
             @endforeach
         </select>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]']) --}}
     </div>
     <div class="form-group">
         <label class="form-label required">رقم الفاتورة</label>
         <div class="input-icon mb-3">
-            <input type="number" value="{{ $row->name ?? '' }}"  class="form-control"
+            <input type="number" value="{{ $row->name ?? '' }}" id="invoice-number" class="form-control"
                 placeholder="Itemname..." autofocus>
             <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
         </div>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'invoice_number[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'invoice_number[]']) --}}
     </div>
 
     <div class="form-group">
         <label class="form-label required">الصنف</label>
         <div class="input-icon mb-3">
-            <input id="item-name" type="text" value="{{ $row->name ?? '' }}" name="item[]" class="form-control"
+            <input id="item-name" type="text" value="{{ $row->name ?? '' }}" id="item" class="form-control"
                 placeholder="Itemname..." autofocus>
             <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
         </div>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'item[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'item[]']) --}}
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlTextarea1">الوصف</label>
-        <textarea id="desc" class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12"
-            name="description[]"></textarea>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'description[]'])
+        <textarea id="description" class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12"></textarea>
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'description[]']) --}}
     </div>
 
     <div class="form-group">
         <label class="form-label required">السعر</label>
         <div class="input-icon mb-3">
-            <input id="pri" type="number" value="{{ $row->name ?? '' }}" name="price[]" class="form-control"
+            <input id="price" type="number" value="{{ $row->name ?? '' }}" class="form-control"
                 placeholder="Itemname..." autofocus>
             <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
         </div>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'price[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'price[]']) --}}
     </div>
     <div class="form-group">
         <label class="form-label required">الكمية</label>
         <div class="input-icon mb-3">
-            <input id="quan" type="number" value="{{ $row->name ?? '' }}" name="quantity[]"
-                class="form-control" placeholder="Itemname..." autofocus>
+            <input id="quantity" type="number" value="{{ $row->name ?? '' }}" class="form-control"
+                placeholder="Itemname..." autofocus>
             <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
         </div>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'quantity[]'])
+        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'quantity[]']) --}}
     </div>
     <div class="card-footer text-center">
-        <a href="javascript:;" id="add-row-btn" class="btn btn-danger btn-larg"> اضافه صف <i class="fas fa-plus mx-2"></i> </a>
+        <a href="javascript:;" id="add-row" class="btn btn-danger btn-larg"> اضافه صف <i class="fas fa-plus mx-2"></i>
+        </a>
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap datatable" id="invoiceTable">
@@ -98,9 +100,10 @@
                     <th>الكمية</th>
                     <th>الوحدة</th>
                     <th>السعر</th>
+                    <th>@lang('buttons.delete')</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="invoice-rows">
             </tbody>
         </table>
 
@@ -113,108 +116,53 @@
 </div>
 @section('js')
     <script>
-        $(document).ready(function() {
-            const tbody = $('#invoiceTable tbody');
-            $('#add-row-btn').click(function() {
-                const newRow = $('<tr>');
-                const itemRow = $('<td>').append($('#item-name').val());
-                const descriptionRow = $('<td>').append($('#desc').val());
-                const quantityRow = $('<td>').append($('#quan').val());
-                const unitRow = $('<td>').append($('#un-id').val());
-                const priceRow = $('<td>').append($('#pri').val());
-                newRow.append(itemRow, descriptionRow, quantityRow, unitRow, priceRow);
-                tbody.append(newRow);
-            });
-            // $('#save-btn').click(function() {
-            //     const rows = $('#invoiceTable tbody tr').map(function() {
-            //         const item = $(this).find('input[name="item[]"]').val();
-            //         const description = $(this).find('input[name="description[]"]').val();
-            //         const quantity = $(this).find('input[name="quantity[]"]').val();
-            //         const unit = $(this).find('input[name="unit_id[]"]').val();
-            //         const price = $(this).find('input[name="price[]"]').val();
-            //         return {
-            //             item: item,
-            //             description: description,
-            //             quantity: quantity,
-            //             unit: unit,
-            //             price: price
-            //         };
-            //     }).get();
+        $("#add-row").on('click', function() {
+            var client_id = $('#client_id').find("option:selected").data('id');
+            var unit_id = $('#unit_id').find("option:selected").data('id');
+            var deleteId = "removeRow" + unit_id;
+            var unit_name = $('#unit_id').find("option:selected").data('name');
+            var trId = "tr" + unit_id;
+            var item = $('#item').val();
+            var quantity = $('#quantity').val();
+            var invoiceNumber = $('#invoice-number').val();
+            var description = $('#description').val();
+            var price = $('#price').val();
+            $("tbody").append(
+                '<tr id="' + trId + '">' +
+                '<td>' + item + '</td>' +
+                '<td>' + description + '</td>' +
+                '<td> <input type="text" name="units[]" value="' + unit_id + '" /> </td>' +
+                '<td>' + unit_name + '</td>' +
+                '<td>' + price + '</td>' +
+                '<td>' +
+                '<a href="javascript:;" id="' + deleteId + '" data-id="' + unit_id + '"data-price="' +
+                '" class="removeRow btn btn-danger waves-effect waves-light btn-xs m-b-5">' +
+                '@lang('buttons.delete')' + '</a>' + '</td>' +
+                '<input type="hidden" name="units[]" value="' + unit_id + '" />' +
+                '<input type="hidden" name="prices[]" value="' + price + '" />' +
+                '<input type="hidden" name="description[]" value="' + description + '" />' +
+                '<input type="hidden" name="invoice[]" value="' + invoiceNumber + '" />' +
 
-            //     // $.ajax({
-            //     //     url: form.attr('action'),
-            //     //     method: form.attr('method'),
-            //     //     data: new FormData(rows[0]),
-            //     //     success: function(response) {
-            //     //         console.log('Data saved successfully.');
-            //     //     },
-            //     //     error: function(xhr, status, error) {
-            //     //         console.error(error);
-            //     //     }
-            //     // });
-            // });
+                '</td>' +
+                "</tr>"
+            );
+
+            $('#client_id').prop('selectedIndex', 0);
+            $('#unit_id').prop('selectedIndex', 0);
+            $('#price').val("");
+            $('#item').val("");
+            $('#price').val("");
+            $('#quantity').val(0);
+
+
+        });
+
+        $('body').on('click', '.removeRow', function() {
+            var id = $(this).attr('data-id');
+            var tr = $(this).closest($('#removeRow' + id).parent().parent());
+            tr.find('td').fadeOut(500, function() {
+                tr.remove();
+            });
         });
     </script>
-    {{-- <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.submit-form').on('submit', function(e) {
-            e.preventDefault();
-            var form = $(this);
-            var formData = new FormData(this);
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-
-                    if (data.status === true) {
-                        alert('true');
-                        // var title = data.title;
-                        // var msg = data.message;
-                        // toastr.options = {
-                        //     positionClass: 'toast-top-left',
-                        //     onclick: null
-                        // };
-                        // var $toast = toastr['success'](msg, title);
-                        // $toastlast = $toast;
-                        // $('#activateForm').each(function() {
-                        //     this.reset();
-                        // });
-
-                        // var id = formData.get('id');
-                        // $('#activateModal').modal('hide');
-
-                        // $('#suspendLabel' + id).slideUp();
-                        // $('#activateLabel' + id).delay(500).slideDown();
-
-                        // $('#suspendButton' + id).show('slow');
-                        // $('#activateButton' + id).hide('slow');
-
-
-                    } else {
-                        alert('false');
-                        // var title = data.title;
-                        // var msg = data.message;
-                        // toastr.options = {
-                        //     positionClass: 'toast-top-left',
-                        //     onclick: null
-                        // };
-                        // var $toast = toastr['error'](msg, title);
-                        // $toastlast = $toast;
-
-                    }
-                },
-                error: function(data) {
-                    alert('error');
-                }
-            });
-        });
-    </script> --}}
 @endsection
