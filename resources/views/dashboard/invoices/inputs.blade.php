@@ -44,7 +44,7 @@
     <div class="form-group">
         <label class="form-label required">رقم الفاتورة</label>
         <div class="input-icon mb-3">
-            <input type="number" value="{{ $row->name ?? '' }}" name="invoice_number[]" class="form-control"
+            <input type="number" value="{{ $row->name ?? '' }}"  class="form-control"
                 placeholder="Itemname..." autofocus>
             <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
         </div>
@@ -87,7 +87,7 @@
         @include('layouts.includes.dashboard.validation-error', ['input' => 'quantity[]'])
     </div>
     <div class="card-footer text-center">
-        <button id="add-row-btn" class="btn btn-danger btn-larg"> اضافه صف <i class="fas fa-plus mx-2"></i> </button>
+        <a href="javascript:;" id="add-row-btn" class="btn btn-danger btn-larg"> اضافه صف <i class="fas fa-plus mx-2"></i> </a>
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap datatable" id="invoiceTable">
@@ -125,34 +125,96 @@
                 newRow.append(itemRow, descriptionRow, quantityRow, unitRow, priceRow);
                 tbody.append(newRow);
             });
-            $('#save-btn').click(function() {
-                const rows = $('#invoiceTable tbody tr').map(function() {
-                    const item = $(this).find('input[name="item[]"]').val();
-                    const description = $(this).find('input[name="description[]"]').val();
-                    const quantity = $(this).find('input[name="quantity[]"]').val();
-                    const unit = $(this).find('input[name="unit_id[]"]').val();
-                    const price = $(this).find('input[name="price[]"]').val();
-                    return {
-                        item: item,
-                        description: description,
-                        quantity: quantity,
-                        unit: unit,
-                        price: price
-                    };
-                }).get();
+            // $('#save-btn').click(function() {
+            //     const rows = $('#invoiceTable tbody tr').map(function() {
+            //         const item = $(this).find('input[name="item[]"]').val();
+            //         const description = $(this).find('input[name="description[]"]').val();
+            //         const quantity = $(this).find('input[name="quantity[]"]').val();
+            //         const unit = $(this).find('input[name="unit_id[]"]').val();
+            //         const price = $(this).find('input[name="price[]"]').val();
+            //         return {
+            //             item: item,
+            //             description: description,
+            //             quantity: quantity,
+            //             unit: unit,
+            //             price: price
+            //         };
+            //     }).get();
 
-                $.ajax({
-                    url: form.attr('action'),
-                    method: form.attr('method'),
-                    data: new FormData(rows[0]),
-                    success: function(response) {
-                        console.log('Data saved successfully.');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
+            //     // $.ajax({
+            //     //     url: form.attr('action'),
+            //     //     method: form.attr('method'),
+            //     //     data: new FormData(rows[0]),
+            //     //     success: function(response) {
+            //     //         console.log('Data saved successfully.');
+            //     //     },
+            //     //     error: function(xhr, status, error) {
+            //     //         console.error(error);
+            //     //     }
+            //     // });
+            // });
         });
     </script>
+    {{-- <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.submit-form').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+
+                    if (data.status === true) {
+                        alert('true');
+                        // var title = data.title;
+                        // var msg = data.message;
+                        // toastr.options = {
+                        //     positionClass: 'toast-top-left',
+                        //     onclick: null
+                        // };
+                        // var $toast = toastr['success'](msg, title);
+                        // $toastlast = $toast;
+                        // $('#activateForm').each(function() {
+                        //     this.reset();
+                        // });
+
+                        // var id = formData.get('id');
+                        // $('#activateModal').modal('hide');
+
+                        // $('#suspendLabel' + id).slideUp();
+                        // $('#activateLabel' + id).delay(500).slideDown();
+
+                        // $('#suspendButton' + id).show('slow');
+                        // $('#activateButton' + id).hide('slow');
+
+
+                    } else {
+                        alert('false');
+                        // var title = data.title;
+                        // var msg = data.message;
+                        // toastr.options = {
+                        //     positionClass: 'toast-top-left',
+                        //     onclick: null
+                        // };
+                        // var $toast = toastr['error'](msg, title);
+                        // $toastlast = $toast;
+
+                    }
+                },
+                error: function(data) {
+                    alert('error');
+                }
+            });
+        });
+    </script> --}}
 @endsection

@@ -19,7 +19,8 @@ class InvoiceController extends DashboardController
 
     public function store(InoviceRequest $request, InvoiceService $service)
     {
-        dd($request);
+        // dd();
+        return $request->all();
         $row = $service->handel($request->validated());
         // $row->stores()->attach([$request->store_id => ['shop_id' => auth()->user()->shop_id, 'quantity' => $request->quantity]]);
         return $row instanceof Exception
