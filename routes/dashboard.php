@@ -34,3 +34,10 @@ Route::post('stores/multi-delete', 'StoreController@multiDelete')->name('stores.
 Route::resource('items', 'ItemController');
 Route::post('items/{item}/toggle/status', 'ItemController@toggleStatus')->name('items.toggle.status');
 Route::post('items/multi-delete', 'ItemController@multiDelete')->name('items.multi-delete');
+
+
+
+
+Route::get('print_settings', 'PrintSettingController@index')->name('print_settings.index');
+Route::post('print_settings', 'PrintSettingController@update')->name('print_settings.update');
+Route::get('print_settings/print', 'PrintSettingController@print')->name('print_settings.print');

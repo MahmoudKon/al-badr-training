@@ -90,7 +90,6 @@
                 @include('layouts.includes.dashboard.validation-error', ['input' => 'pay_price'])
             </div>
 
-
             <div class="form-group mb-3">
                 <label class="required cursor-pointer" for="is_active">@lang('items.show-in-sales')</label>
                 <label class="form-switch">
@@ -112,6 +111,15 @@
                 <label class="form-label">@lang('items.image')</label>
                 <input type="file" accept="image/*" name="image" class="form-control">
                 @include('layouts.includes.dashboard.validation-error', ['input' => 'desc'])
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label required">@lang('items.barcode')</label>
+                <div class="input-icon">
+                    <input type="text" value="{{ $row->barcode ?? old('barcode', $barcode) }}" name="barcode" class="form-control" placeholder="@lang('items.barcode')" autofocus>
+                    <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
+                </div>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'barcode'])
             </div>
         </div>
     </div>

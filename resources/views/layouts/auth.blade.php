@@ -14,6 +14,11 @@
 </head>
 
 <body class=" border-top-wide border-primary d-flex flex-column">
+
+    {{-- START SIDEBAR SECTION --}}
+    @include('layouts.includes.dashboard.loading-page')
+    {{-- END SIDEBAR SECTION --}}
+
     <div class="page page-center">
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
@@ -48,14 +53,6 @@
 
     @yield('js')
     @stack('js')
-
-    <script>
-        $(function() {
-            $('body').on('submit', 'form', function() {
-                $(this).closest('.card').addClass('load');
-            })
-        });
-    </script>
 
 </body>
 

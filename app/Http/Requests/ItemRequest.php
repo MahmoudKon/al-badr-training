@@ -43,6 +43,7 @@ class ItemRequest extends FormRequest
             'category_id' => trans('menu.the category'),
             'unit_id'     => trans('menu.the unit'),
             'name'        => trans('items.name'),
+            'barcode'     => trans('items.barcode'),
             'desc'        => trans('items.desc'),
             'image'       => trans('items.image'),
             'min'         => trans('items.min'),

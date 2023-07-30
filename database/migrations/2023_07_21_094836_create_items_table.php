@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
+            $table->string('barcode')->unique();
             $table->text('desc')->nullable();
             $table->string('image')->nullable();
             $table->unsignedSmallInteger('min')->default(0);

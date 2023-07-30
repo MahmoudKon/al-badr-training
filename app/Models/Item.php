@@ -13,7 +13,7 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['shop_id', 'category_id', 'unit_id', 'name', 'desc', 'image', 'min', 'sale_price', 'pay_price', 'is_active'];
+    protected $fillable = ['shop_id', 'category_id', 'unit_id', 'name', 'barcode', 'desc', 'image', 'min', 'sale_price', 'pay_price', 'is_active'];
 
     public function stores()
     {

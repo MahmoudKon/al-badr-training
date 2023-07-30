@@ -12,9 +12,6 @@
 
 @vite(['resources/js/app.js'])
 
-@yield('js')
-@stack('js')
-
 <script>
     $(function() {
         $(document).ready(function() {
@@ -22,3 +19,6 @@
         });
     });
 </script>
+
+@yield('js')
+@stack('js')

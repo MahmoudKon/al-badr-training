@@ -13,7 +13,10 @@
 @include('layouts.includes.dashboard.head')
 {{-- END HEAD SECTION --}}
 
-<body class=" layout-fluid">
+<body class="layout-fluid">
+    {{-- START SIDEBAR SECTION --}}
+    @include('layouts.includes.dashboard.loading-page')
+    {{-- END SIDEBAR SECTION --}}
 
     <div class="page">
         {{-- START SIDEBAR SECTION --}}

@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->truncateTables();
+        // $this->truncateTables();
         $this->call(AdminSeeder::class);
         \App\Models\Shop::factory(5)
                             ->has(\App\Models\User::factory()->count(5))
@@ -24,13 +24,13 @@ class DatabaseSeeder extends Seeder
     protected function truncateTables()
     {
         $tableNames = \Illuminate\Support\Facades\Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
-        foreach ($tableNames as $name) {
-            if ($name != 'migrations' && $name != 'shops') {
-                Schema::enableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
+            foreach ($tableNames as $name) {
+                if ($name != 'migrations' && $name != 'shops') {
                     \Illuminate\Support\Facades\DB::table($name)->truncate();
-                Schema::disableForeignKeyConstraints();
+                }
             }
-        }
+        Schema::disableForeignKeyConstraints();
         \Illuminate\Support\Facades\DB::table('shops')->truncate();
     }
 }

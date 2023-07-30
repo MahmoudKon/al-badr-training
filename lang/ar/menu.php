@@ -37,4 +37,9 @@ return [
     'item' => 'صنف',
     'the item' => 'الصنف',
 
+
+
+    // PRINT SETTINGS
+    'print_settings' => 'إعدادات الطباعة',
+
 ];

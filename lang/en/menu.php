@@ -37,4 +37,8 @@ return [
     'item' => 'Item',
     'the item' => 'Item',
 
+
+
+    // PRINT SETTINGS
+    'print_settings' => 'Print Settings',
 ];

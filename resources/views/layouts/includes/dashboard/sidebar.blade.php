@@ -61,22 +61,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-user"></i> </span>
-                        <span class="nav-link-title"> Interface </span>
+                <li class="nav-item {{ checkRoute('print_settings.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('print_settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-print"></i> </span>
+                        <span class="nav-link-title"> @lang('menu.print_settings') </span>
                     </a>
-
-                    <div class="dropdown-menu px-3">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./empty.html">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-user"></i> </span>
-                                    <span class="nav-link-title"> Interface </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>

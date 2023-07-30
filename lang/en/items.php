@@ -6,6 +6,7 @@ return [
     'list-rows' => 'List items',
 
     'name' => 'Item Name',
+    'barcode' => 'Barcode',
     'desc' => 'Description',
     'sale_price' => 'Sale Price',
     'pay_price' => 'Pay Price',
