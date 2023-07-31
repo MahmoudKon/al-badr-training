@@ -1,3 +1,5 @@
+const { Button } = require("bootstrap");
+
 $(function() {
     let run_ajax = {abort: function() {}};
     let active_page_link = window.location.href;
@@ -132,6 +134,34 @@ $(function() {
             //
         });
     });
+    // this Event To Add more input when click
+    // $('body').on('click', '.more-store', function(e){
+    //     e.preventDefault();
+    //     var maxItem = 0; //At frist There is No inputs of store
+    //     if(maxItem<5){
+    //         // we need for two inputs for store name && qty
+    //         maxItem+=1;
+    //         var label = document.createElement('label');
+    //         label.id = "store-name";
+    //         label.innerHTML="StoreName-num"+maxItem+": ";
+    //         var input = document.createElement('input');
+    //         input.type = "text";
+    //         input.name = "stores[maxItem]['store_id']";
+    //         input.value= document.getElementsByClassName('more-store').val();
+
+    //         var label2 = document.createElement("label");
+    //         label2.id = "Quantity";
+    //         label2.innerHTML = "Quantity of"+document.getElementsByClassName('more-store').val()+": ";
+    //         var input2 = document.createElement("input");
+    //         input2.type="text";
+    //         input2.name="stores[maxItem]['qty']";
+    //         // $($(label)).insertBefore($(select.after-me));
+    //         // $($(input)).insertBefore($(select.after-me));
+    //         // $($(label2)).insertBefore($(select.after-me));
+    //         // $($(input2)).insertBefore($(select.after-me));
+    //         // $('<br/>').insertBefore($(select.after-me));
+    //     }
+    // });
 
     // This Function To Handle Any Response Error And Show It
     function handleErrors(jqXHR, form = null)

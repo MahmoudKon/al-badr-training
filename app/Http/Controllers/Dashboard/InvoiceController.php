@@ -7,6 +7,7 @@ use App\Models\InvoiceSetting;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Http\Request;
 
 class InvoiceController extends DashboardController
 {
@@ -29,6 +30,18 @@ class InvoiceController extends DashboardController
         //
     }
 
+        /**
+     * Store a newly created resource in storage.
+     */
+    public function setting_store(Request $request)
+    {
+        $setting = InvoiceSetting::where('id',1)->update($request->except('_token'));
+        if($setting){
+            return redirect()->route('dashboard.invoices.setting');
+        }else{dd($request);}
+
+    }
+
     public function setting()
     {
         $settings = InvoiceSetting::get();
@@ -36,25 +49,25 @@ class InvoiceController extends DashboardController
 
         $result =[];
         foreach($rows as $row){
-            $last_iteration = null;
+            // $last_iteration = null;
             foreach($row as $key=> $value){
-                // dd($key);
+
                 if(strpos($key, "-")){
-                    // dd($key);
+
                     $indexes = explode("-",$key);
+                    $result[$indexes[0]][$key] = $value;
 
-                    if($indexes[0]!=$last_iteration){
-                        $result[$indexes[0]] = [$key=>$value];
-                        // dd($result);
-                    }else{
-                        $result[$indexes[0]][$key] = $value;
-                    }
+                    // if($indexes[0]!=$last_iteration){
+                    //     $result[$indexes[0]] = [$key=>$value];
 
-                    $last_iteration = $indexes[0];
+                    // }else{
+                    //     $result[$indexes[0]][$key] = $value;
+                    // }
+
+                    // $last_iteration = $indexes[0];
                 }
             }
-                // dd($last_iteration);
-                // dd($result);
+
         }
 
 
@@ -62,7 +75,16 @@ class InvoiceController extends DashboardController
     }
     public function print()
     {
-        return view('dashboard.invoice.print');
+        $settings = InvoiceSetting::get();
+        // $settings_up = [];
+        foreach($settings as $setting){
+            // str_replace return json_encode as string so if You need to work on result of it you must decode result
+            $result_encode = str_replace('-','_', $setting);//dd($setting,$result);
+            // $settings_up[] = $result;
+        }
+        $result = json_decode($result_encode);
+        // dd($settings, $result);
+        return view('dashboard.invoice.print', compact('result'));
     }
 
 

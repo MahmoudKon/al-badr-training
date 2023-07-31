@@ -29,26 +29,49 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
-                    <p class="h3">Company</p>
-                    <address>
-                      Street Address<br>
-                      State, City<br>
-                      Region, Postal Code<br>
-                      ltd@example.com
-                    </address>
+                    @if($result->shop_name == 1)
+                        <p class="h3">Company</p><!--Shop name-->
+                    @endif
+
+                    @if($result->shop_address == 1)
+                        <address>
+                        Street Address<br>
+                        State, City<br>
+                        Region, Postal Code<br>
+                        ltd@example.com
+                        </address>
+                    @endif
+
+                    @if($result->shop_email == 1)
+                        <p>
+                        ltd@example.com
+                        </p>
+                    @endif
+
                   </div>
                   <div class="col-6 text-end">
-                    <p class="h3">Client</p>
+                    @if($result->client_name == 1)
+                        <p class="h3">Client</p>
+                    @endif
+                    @if($result->client_address)
                     <address>
                       Street Address<br>
                       State, City<br>
                       Region, Postal Code<br>
                       ctr@example.com
                     </address>
+                    @endif
+                    @if($result->client_email == 1)
+                        <p>
+                        ctr@example.com
+                        </p>
+                    @endif
                   </div>
-                  <div class="col-12 my-5">
-                    <h1>Invoice INV/001/15</h1>
-                  </div>
+                  @if($result->invoice_date)
+                    <div class="col-12 my-5">
+                        <h1>Invoice INV/001/15</h1>
+                    </div>
+                  @endif
                 </div>
                 <table class="table table-transparent table-responsive">
                   <thead>

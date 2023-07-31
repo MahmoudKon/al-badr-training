@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=>'auth:web'], function($route){
+    //For Translate arabic and engilsh
+    Route::get('change/{lang}', '\App\Http\Controllers\HomeController@lang')->middleware('ChangeLang')->name('change.lang');
 
     Route::view('/', 'layouts.dashboard')->name('index');
 
@@ -27,6 +29,7 @@ Route::group(['middleware'=>'auth:web'], function($route){
     Route::resource('invoices', 'InvoiceController');
     Route::post('d/multi-del', 'InvoiceController@multi')->name('invoices.multi-delete');
     Route::get('invoice/setting', 'InvoiceController@setting')->name('invoices.setting');
+    Route::post('invoice/setting', 'InvoiceController@setting_store')->name('invoice.setting.store');
     Route::get('invoice/print', 'InvoiceController@print')->name('invoices.print');
 
 

@@ -46,7 +46,9 @@
                             <select name="stores[{{ $i }}][store_id]" class="form-control select2">
                                 <option value="">---</option>
                                 @foreach ($stores as $id => $name)
-                                    <option value="{{ $id }}" {{ isset($row) && $row->stores->where('id', $id)->count() ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ isset($row) && $row->stores->where('id', $id)->count() ? 'selected' : '' }}>
+                                        <button type="button" class="#">{{ $name }}+</button>
+                                    </option>
                                 @endforeach
                             </select>
                             @include('layouts.includes.dashboard.validation-error', ['input' => "stores.$i.store_id"])

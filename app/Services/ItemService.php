@@ -29,7 +29,7 @@ class ItemService
                 'shop_id'=>shopId(),
             ];
             if(count($row)){
-                $item->stores()->sync($rows);
+                $item->stores()->sync($row);
             }
         }
     }

@@ -3,7 +3,19 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        <div class="navbar-nav flex-row">
+            <div class="d-none d-md-flex">
+                @if (app()->isLocale('ar'))
+                    <a href="{{ routeHelper('change.lang', 'en') }}" class="nav-link px-0" title="English" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        EN
+                    </a>
+                @else
+                    <a href="{{ routeHelper('change.lang', 'ar') }}" class="nav-link px-0" title="Arabic" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        AR
+                    </a>
+                @endif
+            </div>
+        </div>
         <div class="navbar-nav flex-row order-md-last">
             <div class="d-none d-md-flex">
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">

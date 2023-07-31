@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function lang($lang)
+    {
+        app()->setLocale($lang);
+        session()->put('locale', $lang);
+
+        return back();
+    }
 }

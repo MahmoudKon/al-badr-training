@@ -22,21 +22,21 @@
                 <li class="nav-item {{ checkRoute('users.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('users.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-users"></i> </span>
-                        <span class="nav-link-title"> Users </span>
+                        <span class="nav-link-title"> @lang('dashboard.users') </span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ checkRoute('units.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('units.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-users"></i> </span>
-                        <span class="nav-link-title"> Units </span>
+                        <span class="nav-link-title"> @lang('dashboard.units') </span>
                     </a>
                 </li>
 
                 <li class="nav-item {{ checkRoute('categories.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('categories.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
-                        <span class="nav-link-title"> Categories </span>
+                        <span class="nav-link-title"> {{__('dashboard.categories')}} </span>
                     </a>
                 </li>
 
