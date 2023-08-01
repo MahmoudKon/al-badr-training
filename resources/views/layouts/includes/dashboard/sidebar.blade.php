@@ -67,6 +67,13 @@
                         <span class="nav-link-title"> @lang('menu.print_settings') </span>
                     </a>
                 </li>
+
+                <li class="nav-item {{ checkRoute('invoices.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('invoices.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-print"></i> </span>
+                        <span class="nav-link-title"> @lang('menu.invoices') </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

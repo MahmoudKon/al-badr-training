@@ -37,6 +37,12 @@ return [
     'item' => 'Item',
     'the item' => 'Item',
 
+    // INVOICES
+    'invoices' => 'Invoices',
+    'invoice' => 'Invoice',
+    'the invoice' => 'Invoice',
+
+
 
 
     // PRINT SETTINGS

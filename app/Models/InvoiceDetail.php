@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class InvoiceDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['shop_id', 'category_id', 'unit_id', 'name', 'barcode', 'desc', 'image', 'min', 'sale_price', 'pay_price', 'is_active'];
+    protected $fillable = ['invoice_id', 'shop_id', 'unit_id', 'category_id', 'sale_price', 'pay_price', 'qty'];
 
-    public function stores()
+    public function unit()
     {
-        return $this->belongsToMany(Store::class, 'item_store', 'item_id', 'store_id')->withPivot('quantity');
+        return $this->belongsTo(Unit::class)->select('id', 'name');
     }
 
     public function category()
@@ -25,35 +25,30 @@ class Item extends Model
         return $this->belongsTo(Category::class)->select('id', 'name');
     }
 
-    public function unit()
-    {
-        return $this->belongsTo(Unit::class)->select('id', 'name');
-    }
-
     protected function salePrice(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => number_format($value, 4),
-        );
-    }
-
-    protected function image(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value && file_exists("uploads/{$this->shop_id}/items/$value") ? asset("uploads/{$this->shop_id}/items/$value") : null,
+            get: fn ($value) => number_format($value, 2)
         );
     }
 
     protected function payPrice(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => number_format($value, 4),
+            get: fn ($value) => number_format($value, 2)
+        );
+    }
+
+    protected function qty(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => number_format($value, 2)
         );
     }
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('name'), fn ($query, $name) => $query->where('name', 'LIKE', "%$name%"));
+        return $builder;
     }
 
     protected static function booted(): void
@@ -66,7 +61,7 @@ class Item extends Model
         parent::boot();
 
         self::creating(function($model) {
-            $model->shop_id = shopId($model->shop_id);
+            $model->shop_id = shopId();
         });
     }
 }

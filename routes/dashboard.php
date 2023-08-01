@@ -36,6 +36,10 @@ Route::post('items/{item}/toggle/status', 'ItemController@toggleStatus')->name('
 Route::post('items/multi-delete', 'ItemController@multiDelete')->name('items.multi-delete');
 
 
+Route::resource('invoices', 'InvoiceController');
+Route::post('invoices/multi-delete', 'InvoiceController@multiDelete')->name('invoices.multi-delete');
+Route::get('invoices/items/list', 'InvoiceController@items')->name('invoices.items.list');
+Route::get('invoices/items/details', 'InvoiceController@itemDetails')->name('invoices.items.details');
 
 
 Route::get('print_settings', 'PrintSettingController@index')->name('print_settings.index');

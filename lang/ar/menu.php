@@ -37,6 +37,11 @@ return [
     'item' => 'صنف',
     'the item' => 'الصنف',
 
+    // INVOICES
+    'invoices' => 'الفواتير',
+    'invoice' => 'فاتورة',
+    'the invoice' => 'الفاتورة',
+
 
 
     // PRINT SETTINGS

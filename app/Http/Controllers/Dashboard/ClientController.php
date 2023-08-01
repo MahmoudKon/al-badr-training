@@ -18,7 +18,7 @@ class ClientController extends DashboardController
 
         return $row instanceof Exception
                 ? response()->json($row, 500)
-                : response()->json(['message' => trans('flash.row created', ['model' => $this->getModule(true)])], 200);
+                : response()->json(['message' => trans('flash.row created', ['model' => $this->getModule(true)]), 'target' => 'clients', 'row' => $row], 200);
     }
 
     public function update(ClientRequest $request, ClientService $service, $category)
