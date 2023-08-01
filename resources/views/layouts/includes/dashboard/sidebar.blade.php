@@ -18,49 +18,54 @@
                         <span class="nav-link-title"> Home </span>
                     </a>
                 </li>
-
+                @can('users')
                 <li class="nav-item {{ checkRoute('users.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('users.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-users"></i> </span>
                         <span class="nav-link-title"> @lang('dashboard.users') </span>
                     </a>
                 </li>
-
+                @endcan
+                @can('units')
                 <li class="nav-item {{ checkRoute('units.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('units.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-users"></i> </span>
                         <span class="nav-link-title"> @lang('dashboard.units') </span>
                     </a>
                 </li>
-
+                @endcan
+                @can('categories')
                 <li class="nav-item {{ checkRoute('categories.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('categories.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
                         <span class="nav-link-title"> {{__('dashboard.categories')}} </span>
                     </a>
                 </li>
-
+                @endcan
+                @can('roles')
                 <li class="nav-item {{ checkRoute('roles.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('roles.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
                         <span class="nav-link-title"> Role-permissions </span>
                     </a>
                 </li>
-
+                @endcan
+                @can('stores')
                 <li class="nav-item {{ checkRoute('stores.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('stores.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
                         <span class="nav-link-title"> Stores </span>
                     </a>
                 </li>
-
+                @endcan
+                @can('items')
                 <li class="nav-item {{ checkRoute('items.*', 'active') }}">
                     <a class="nav-link" href="{{ routeHelper('items.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-list"></i> </span>
                         <span class="nav-link-title"> Items </span>
                     </a>
                 </li>
-
+                @endcan
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"> <i class="fa-solid fa-user"></i> </span>

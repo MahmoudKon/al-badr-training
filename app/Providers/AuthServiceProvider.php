@@ -23,7 +23,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
+        /**
+         * get the array of permissions from config at global file
+         * Then define the gate and pass parameter to method that at Model
+         */
         foreach( Config('global.permissions') as $ability => $value){
             Gate::define($ability, function($auth) use ($ability){
                 return $auth->hasAbility($ability);

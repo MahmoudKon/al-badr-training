@@ -24,15 +24,15 @@ class Role extends Model
         return json_decode($permission, true);
     }
 
-    public function scopeFilter(Builder $builder): Builder
-    {
-        return $builder;
-    }
+    // public function scopeFilter(Builder $builder): Builder
+    // {
+    //     return $builder;
+    // }
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new PerShopScope); // assign the Scope here
-    }
+    // protected static function booted(): void
+    // {
+    //     static::addGlobalScope(new PerShopScope); // assign the Scope here
+    // }
 
     protected static function boot(): void
     {

@@ -77,10 +77,10 @@ class User extends Authenticatable
      */
     public function hasAbility($permissions){
         // $role = Auth::user()->role();
-        $role = $this->role(); // getting role through relation function
-        if($role){dd($role);
-            foreach($role->permission as $per){
-                if(isset($permissions) && in_array($per, $permissions)){
+        $role = $this->role()->get(); // getting role through relation function
+        if($role){//dd($role);
+            foreach($role[0]->permission as $per){//dd($per);
+                if(is_array($permissions) && in_array($per, $permissions)){
                     return true;
                 }elseif(is_string($permissions) && strcmp($permissions, $per) == 0){
                     return true;
