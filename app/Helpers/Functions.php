@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * Api functions

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Invoice;
+use App\Models\User;
+use App\Models\Item;
 use App\Models\InvoiceSetting;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
@@ -13,6 +15,13 @@ class InvoiceController extends DashboardController
 {
     protected string $folder = 'invoice';
     protected string $model = 'App\\Models\\Invoice';
+
+    protected function append():array{
+        return[
+            'clients' => User::select('id', 'name')->get()->pluck('name', 'id'),
+            'items' => Item::get(),
+        ];
+    }
 
     /**
      * Store a newly created resource in storage.
