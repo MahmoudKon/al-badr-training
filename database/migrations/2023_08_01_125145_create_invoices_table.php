@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null')->onUpdate('cascade');
             $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedDecimal('total', 10,4);
+            $table->unsignedBigInteger('bill_no');
             $table->timestamp('bill_date');
             $table->softDeletes();
             $table->timestamps();

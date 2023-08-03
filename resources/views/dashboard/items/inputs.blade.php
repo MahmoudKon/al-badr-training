@@ -110,7 +110,7 @@
             <div class="form-group mb-3">
                 <label class="form-label">@lang('items.image')</label>
                 <input type="file" accept="image/*" name="image" class="form-control">
-                @include('layouts.includes.dashboard.validation-error', ['input' => 'desc'])
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'image'])
             </div>
 
             <div class="form-group mb-3">

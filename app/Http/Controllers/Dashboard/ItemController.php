@@ -48,7 +48,7 @@ class ItemController extends DashboardController
             'categories' => Category::select('id', 'name')->pluck('name', 'id'),
             'units'      => Unit::select('id', 'name')->pluck('name', 'id'),
             'stores'     => Store::select('id', 'name')->pluck('name', 'id'),
-            'barcode'    => Item::max('barcode') + 1,
+            'barcode'    => (int) Item::max('barcode') + 1,
         ];
     }
 

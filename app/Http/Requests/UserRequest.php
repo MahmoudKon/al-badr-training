@@ -25,6 +25,7 @@ class UserRequest extends FormRequest
             'name'     => 'required|string|min:2|max:190',
             'email'    => 'required|email|unique:users,email,'.$this->route('user'),
             'password' => (request()->method() == 'POST' ? 'required' : 'nullable').'|string',
+            'image'    => 'nullable|image',
         ];
     }
 
@@ -34,6 +35,7 @@ class UserRequest extends FormRequest
             'name'     => trans('users.name'),
             'email'    => trans('users.email'),
             'password' => trans('users.password'),
+            'image'    => trans('users.image'),
         ];
     }
 

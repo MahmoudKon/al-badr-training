@@ -14,7 +14,7 @@ class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['shop_id', 'user_id', 'client_id', 'bill_date', 'total'];
+    protected $fillable = ['shop_id', 'user_id', 'client_id', 'bill_date', 'total', 'bill_no'];
 
     public function user()
     {
@@ -29,6 +29,11 @@ class Invoice extends Model
     public function details()
     {
         return $this->hasMany(InvoiceDetail::class);
+    }
+
+    public static function getMaxNumber()
+    {
+        return self::max('bill_no') + 1;
     }
 
     protected function total(): Attribute

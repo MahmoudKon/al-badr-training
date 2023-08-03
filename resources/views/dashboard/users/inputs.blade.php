@@ -27,6 +27,18 @@
         </div>
         @include('layouts.includes.dashboard.validation-error', ['input' => 'password'])
     </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">@lang('users.image')</label>
+        <input type="file" accept="image/*" name="image" class="form-control">
+        @include('layouts.includes.dashboard.validation-error', ['input' => 'image'])
+    </div>
+
+    @if (isset($row) && $row->image)
+        <div class="form-group mb-3">
+            <img src="{{ $row->image }}" class="img-fluid <img src=" alt="" width="200px" height="200px">
+        </div>
+    @endif
 </div>
 
 <div class="card-footer text-center">

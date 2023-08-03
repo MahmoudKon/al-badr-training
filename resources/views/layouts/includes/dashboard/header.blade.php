@@ -29,7 +29,11 @@
 
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link nav-options d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url({{ asset('assets/img/avatars/069m.jpg') }})"></span>
+                    @if (auth()->user()->image)
+                        <span class="avatar avatar-sm" style="background-image: url({{ auth()->user()->image }})"></span>
+                    @else
+                        <span class="avatar avatar-sm" style="background-image: url({{ asset('assets/img/avatars/069m.jpg') }})"></span>
+                    @endif
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ auth()->user()->name }}</div>
                         <div class="mt-1 small text-muted">{{ auth()->user()->email }}</div>

@@ -9,4 +9,5 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'confirmed-password' => 'Confirmed password',
+    'image' => 'Avatar',
 ];

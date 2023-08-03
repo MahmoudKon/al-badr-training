@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Scopes\PerShopScope;
-use App\Traits\FilterPerShop;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -28,7 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'shop_id'
+        'shop_id',
+        'image'
     ];
 
     /**
@@ -58,8 +57,27 @@ class User extends Authenticatable
         );
     }
 
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value && file_exists(self::uploadPath()."/$value") ? asset(self::uploadPath()."/$value") : null,
+        );
+    }
+
+    protected static function uploadPath()
+    {
+        return "uploads/".shopId()."/users";
+    }
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id')->select('id', 'name');
+    }
+
+    public function scopeFilter(Builder $builder): Builder
+    {
+        return $builder->when(request()->get('filter'), function($query, $filter) {
+            $query->where('name', 'LIKE', "%$filter%")->orWhere('email', 'LIKE', "%$filter%");
+        });
     }
 }
