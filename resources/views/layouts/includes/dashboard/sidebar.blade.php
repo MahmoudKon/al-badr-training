@@ -97,6 +97,15 @@
                         <span class="nav-link-title"> @lang('menu.shop') </span>
                     </a>
                 </li>
+                {{-- PrintSettings --}}
+                <li class="nav-item {{ checkRoute('print_settings.*', 'active') }}">
+                    <a class="nav-link" href="{{ routeHelper('print_settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"> <i
+                                class="fa-solid fa-print fa-fade"></i>
+                        </span>
+                        <span class="nav-link-title"> @lang('menu.print_settings') </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

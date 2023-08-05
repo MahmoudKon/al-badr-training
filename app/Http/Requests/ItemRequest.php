@@ -22,22 +22,32 @@ class ItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:2|max:190',
-            'description' => 'required|string|min:2|max:190',
-            'price' => 'required|numeric',
-            'category_id' => 'required|numeric',
-            'unit_id' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id,shop_id,' . shopId(),
+            'unit_id'     => 'required|exists:units,id,shop_id,' . shopId(),
+            'name'        => 'required|string|unique:items,name,'.$this->route('item').',id,shop_id,'.shopId(),
+            'desc'        => 'nullable|string',
+            'image'       => 'nullable|image',
+            'min'         => 'nullable|numeric',
+            'sale_price'  => 'nullable|numeric|min:0',
+            'pay_price'   => 'nullable|numeric|min:0',
+            'is_active'   => 'nullable|boolean',
+            'barcode'   => 'nullable|boolean'
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'ألاسم',
-            'description' => 'الوصف',
-            'price' => 'السعر',
-            'category_id' => 'القسم',
-            'unit_id' => 'الوحدة',
+            'category_id' => trans('menu.the category'),
+            'unit_id'     => trans('menu.the unit'),
+            'name'        => trans('items.name'),
+            'barcode'     => trans('items.barcode'),
+            'desc'        => trans('items.desc'),
+            'image'       => trans('items.image'),
+            'min'         => trans('items.min'),
+            'sale_price'  => trans('items.sale_price'),
+            'pay_price'   => trans('items.pay_price'),
+            'is_active'   => trans('items.show-in-sales'),
         ];
     }
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\StoresController;
 use App\Http\Controllers\Dashboard\ClientsController;
 use App\Http\Controllers\Dashboard\InvoiceController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\PrintSettingController;
 
 Route::view('', 'layouts.dashboard')->name('index');
 Route::get('change/lang/{lang}', [HomeController::class, 'changeLang'])->name('change.lang');
@@ -36,7 +37,10 @@ Route::resource('items', ItemsController::class);
 Route::post('items/multi-delete', [ItemsController::class, 'multiDelete'])->name('items.multi-delete');
 //Inovies
 Route::resource('invoices', InvoiceController::class);
-Route::post('invoices/multi-delete', [InvoiceController::class, 'multiDelete'])->name('invoices.multi-delete');
+// Route::post('invoices/multi-delete', [InvoiceController::class, 'multiDelete'])->name('invoices.multi-delete');
+Route::get('invoices/items/list', [InvoiceController::class, 'items'])->name('invoices.items.list');
+Route::get('invoices/items/details', [InvoiceController::class, 'itemDetails'])->name('invoices.items.details');
+Route::get('invoices/items/quantity', [InvoiceController::class, 'itemQuantity'])->name('invoices.items.quantity');
 
 //Shops
 // Route::controller('ShopController')->as('shop.')->prefix('shop')->group(function () {
@@ -44,3 +48,8 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop', [ShopController::class, 'store'])->name('store');
 Route::delete('/shop', [ShopController::class, 'destroy'])->name('destroy');
 // });
+
+//PrintSettings
+Route::get('print_settings', [PrintSettingController::class, 'index'])->name('print_settings.index');
+Route::post('print_settings', [PrintSettingController::class, 'update'])->name('print_settings.update');
+Route::get('print_settings/print', [PrintSettingController::class, 'print'])->name('print_settings.print');

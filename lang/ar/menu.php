@@ -44,5 +44,6 @@ return [
 
     // SHOP
     'shop' => 'اعدادات المتجر',
-
+    //PRINTSETTINGS
+    'print_settings'=>'اعدادات الطباعة',
 ];

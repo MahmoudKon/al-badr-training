@@ -88,7 +88,12 @@ $(function () {
             success: function (response) {
                 modal.modal('hide').find('.modal-body').empty();
                 showAlert(success_alert, response.message);
-                loadTable(active_page_link);
+                if (table.length) {
+                    loadTable(active_page_link);
+                } else if (response.row && response.target) {
+                    $(`#${response.target}`).find('option:selected').removeAttr('selected');
+                    $(`#${response.target}`).append(`<option value="${response.row.id}" selected>${response.row.name}</option>`);
+                }
             },
             error: function (jqXHR) { handleErrors(jqXHR, form); },
             complete: function (jqXHR, textStatus) { form.closest('.card').removeClass('load'); }
@@ -124,7 +129,7 @@ $(function () {
             error: function (jqXHR) { handleErrors(jqXHR); },
         });
     });
-    
+
 
     $('body').on('click', '.removeRow', function () {
         var id = $(this).attr('data-id');

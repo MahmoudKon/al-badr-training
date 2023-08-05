@@ -12,7 +12,7 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'price', 'description', 'unit_id', 'shop_id', 'category_id', 'is_active'];
+    protected $fillable = ['shop_id', 'category_id', 'unit_id', 'name',  'desc',  'min', 'sale_price', 'pay_price', 'is_active'];
 
     public function stores()
     {
@@ -21,12 +21,12 @@ class Item extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->select('id', 'name');;
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(Unit::class)->select('id', 'name');;
     }
 
     public function shop()
@@ -36,7 +36,7 @@ class Item extends Model
 
     public function scopeFilter(Builder $builder): Builder
     {
-        return $builder->when(request()->get('search'), fn ($query, $name) => $query->where('name', 'LIKE', "%{$name}%"));
+        return $builder->when(request()->get('name'), fn ($query, $name) => $query->where('name', 'LIKE', "%{$name}%"));
     }
 
     protected static function booted(): void

@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->text('description');
-            $table->integer('price');
-            $table->boolean('is_active')->default(0)->comment('0 is deactive | 1 is active');
+            // $table->string('barcode')->unique();
+            $table->text('desc')->nullable();
+            // $table->string('image')->nullable();
+            $table->unsignedSmallInteger('min')->default(0);
+            $table->unsignedFloat('sale_price', 6, 4)->default(0);
+            $table->unsignedFloat('pay_price', 6, 4)->default(0);
+            $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ class ClientsController extends DashboardController
         $row = $service->handel($request->validated());
         return $row instanceof Exception
             ? response()->json($row, 500)
-            : response()->json(['message' => 'تم انشاء الصنف بنجاح'], 200);
+            : response()->json(['message' => 'تم انشاء الصنف بنجاح', 'target' => 'clients', 'row' => $row], 200);
     }
 
 
@@ -31,5 +31,4 @@ class ClientsController extends DashboardController
             ? response()->json($row, 500)
             : response()->json(['message' => 'تم تعديل الصنف بنجاح'], 200);
     }
-
 }

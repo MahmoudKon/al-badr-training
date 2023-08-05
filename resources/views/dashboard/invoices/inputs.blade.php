@@ -1,168 +1,357 @@
+@push('css')
+    <style>
+        #items {
+            padding: 0;
+            margin: 0;
+            background: #fcfcfc;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: scroll;
+            box-shadow: 0px 4px 4px -1px #3f3f3f;
+        }
+
+        .selected-item {
+            list-style: none;
+            padding: 7px;
+            background: #e3e3e3;
+        }
+
+        .selected-item:nth-child(odd) {
+            background: #fff;
+        }
+
+        .selected-item:hover {
+            background: #e9e9e9;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+@endpush
 <div class="card-body">
-    @csrf
-    <div class="mb-3">
-        <div class="form-label">اختر العميل</div>
-        <select class="form-select" id="client_id">
-            <option value="">------</option>
-            @foreach ($clients as $id => $name)
-                <option data-id="{{ $id }}" value="{{ $id }}">{{ $name }}</option>
-            @endforeach
-        </select>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]']) --}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label class="form-label required">
+                    @lang('clients.name')
+                    <a href="{{ routeHelper('clients.create') }}" class="btn btn-sm btn-primary open-modal float-end"> <i
+                            class="fas fa-plus px-0"></i> </a>
+                </label>
+                <select name="client_id" id="clients" class="form-control">
+                    <option value="">---</option>
+                    @foreach ($clients as $id => $name)
+                        <option value="{{ $id }}"
+                            {{ isset($row) && $row->client_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id'])
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label class="form-label required">
+                    @lang('stores.name')
+                    <a href="{{ routeHelper('stores.create') }}" class="btn btn-sm btn-primary open-modal float-end"> <i
+                            class="fas fa-plus px-0"></i> </a>
+                </label>
+                <select name="store_id" id="stores" class="form-control">
+                    @foreach ($stores as $id => $name)
+                        <option value="{{ $id }}"
+                            {{ isset($row) && $row->store_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'store_id'])
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group mb-3">
+                <label class="form-label required"> @lang('invoice.date') </label>
+                <div class="input-icon mb-3">
+                    <input type="date" value="{{ old('bill_date', date('Y-m-d')) }}" name="bill_date"
+                        class="form-control">
+                    <span class="input-icon-addon"> <i class="fa fa-calendar" aria-hidden="true"></i> </span>
+                </div>
+                @include('layouts.includes.dashboard.validation-error', ['input' => 'bill_date'])
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('invoice.bill_no') </label>
+                <input disabled readonly value="{{ $bill_no }}" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('items.quantity') </label>
+                <input disabled readonly id="current_quantity" class="form-control">
+            </div>
+        </div>
     </div>
 
-    {{-- <div class="mb-3">
-        <div class="form-label">تاريخ البيع</div>
-        <div class="input-icon">
-            <span class="input-icon-addon">
-                <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <rect x="4" y="5" width="16" height="16" rx="2" />
-                    <line x1="16" y1="3" x2="16" y2="7" />
-                    <line x1="8" y1="3" x2="8" y2="7" />
-                    <line x1="4" y1="11" x2="20" y2="11" />
-                    <line x1="11" y1="15" x2="12" y2="15" />
-                    <line x1="12" y1="15" x2="12" y2="18" />
-                </svg>
-            </span>
-            <input class="form-control" placeholder="Select a date" id="datepicker-icon-prepend" value="2020-06-20" />
-        </div>
-    </div> --}}
 
-    <div class="mb-3">
-        <div class="form-label">الوحدة</div>
-        <select class="form-select" " id="unit_id">
-            <option value="">------</option>
-                                       @foreach ($units as $id=> $name)
-            <option data-id="{{ $id }}" data-name="{{ $name }}" value="{{ $id }}">
-                {{ $name }}</option>
-            @endforeach
-        </select>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'client_id[]']) --}}
-    </div>
-    <div class="form-group">
-        <label class="form-label required">رقم الفاتورة</label>
-        <div class="input-icon mb-3">
-            <input type="number" value="{{ $row->name ?? '' }}" id="invoice-number" class="form-control"
-                placeholder="Itemname..." autofocus>
-            <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group mb-3">
+                <label class="form-label required"> @lang('items.name') </label>
+                <input type="search" id="item_name" autocomplete="off" class="form-control">
+                <ul id="items" class="d-none"></ul>
+            </div>
         </div>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'invoice_number[]']) --}}
-    </div>
 
-    <div class="form-group">
-        <label class="form-label required">الصنف</label>
-        <div class="input-icon mb-3">
-            <input id="item-name" type="text" value="{{ $row->name ?? '' }}" id="item" class="form-control"
-                placeholder="Itemname..." autofocus>
-            <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('units.name') </label>
+                <input disabled readonly id="unit" class="form-control">
+            </div>
         </div>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'item[]']) --}}
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('categories.name') </label>
+                <input disabled readonly id="category" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('items.pay_price') </label>
+                <input disabled readonly id="pay_price" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('items.sale_price') </label>
+                <input type="number" id="sale_price" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('items.quantity') </label>
+                <input type="number" id="quantity" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-sm btn-info" id="add-item-details">Add</button>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1">الوصف</label>
-        <textarea id="description" class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12"></textarea>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'description[]']) --}}
-    </div>
 
-    <div class="form-group">
-        <label class="form-label required">السعر</label>
-        <div class="input-icon mb-3">
-            <input id="price" type="number" value="{{ $row->name ?? '' }}" class="form-control"
-                placeholder="Itemname..." autofocus>
-            <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
-        </div>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'price[]']) --}}
-    </div>
-    <div class="form-group">
-        <label class="form-label required">الكمية</label>
-        <div class="input-icon mb-3">
-            <input id="quantity" type="number" value="{{ $row->name ?? '' }}" class="form-control"
-                placeholder="Itemname..." autofocus>
-            <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
-        </div>
-        {{-- @include('layouts.includes.dashboard.validation-error', ['input' => 'quantity[]']) --}}
-    </div>
-    <div class="card-footer text-center">
-        <a href="javascript:;" id="add-row" class="btn btn-danger btn-larg"> اضافه صف <i class="fas fa-plus mx-2"></i>
-        </a>
-    </div>
-    <div class="table-responsive">
-        <table class="table card-table table-vcenter text-nowrap datatable" id="invoiceTable">
+    <div class="row">
+        <table class="table card-table table-vcenter text-nowrap datatable">
             <thead>
                 <tr>
-                    <th>الصنف</th>
-                    <th>الوصف</th>
-                    <th>الكمية</th>
-                    <th>الوحدة</th>
-                    <th>السعر</th>
+                    <th class="w-1">#</th>
+                    <th>@lang('items.name')</th>
+                    <th>@lang('menu.the category')</th>
+                    <th>@lang('menu.the unit')</th>
+                    <th>@lang('items.pay_price')</th>
+                    <th>@lang('items.sale_price')</th>
+                    <th>@lang('items.quantity')</th>
+                    <th>@lang('invoice.total')</th>
                     <th>@lang('buttons.delete')</th>
                 </tr>
             </thead>
-            <tbody id="invoice-rows">
-            </tbody>
+            <tbody id="invoice-details"></tbody>
         </table>
 
     </div>
 
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group mb-3">
+                <label class="form-label"> @lang('invoice.total') </label>
+                <input disabled readonly value="0" id="total" class="form-control">
+            </div>
+        </div>
+    </div>
 </div>
-<div class="card-footer text-center">
-    <button id="save-btn" type="submit" class="btn btn-info btn-sm"> حفظ <i class="fas fa-save mx-2"></i>
-    </button>
-</div>
-@section('js')
+@push('js')
     <script>
-        $("#add-row").on('click', function() {
-            var client_id = $('#client_id').find("option:selected").data('id');
-            var unit_id = $('#unit_id').find("option:selected").data('id');
-            var deleteId = "removeRow" + unit_id;
-            var unit_name = $('#unit_id').find("option:selected").data('name');
-            var trId = "tr" + unit_id;
-            var item = $('#item').val();
-            var quantity = $('#quantity').val();
-            var invoiceNumber = $('#invoice-number').val();
-            var description = $('#description').val();
-            var price = $('#price').val();
-            $("tbody").append(
-                '<tr id="' + trId + '">' +
-                '<td>' + item + '</td>' +
-                '<td>' + description + '</td>' +
-                '<td> <input type="text" name="units[]" value="' + unit_id + '" /> </td>' +
-                '<td>' + unit_name + '</td>' +
-                '<td>' + price + '</td>' +
-                '<td>' +
-                '<a href="javascript:;" id="' + deleteId + '" data-id="' + unit_id + '"data-price="' +
-                '" class="removeRow btn btn-danger waves-effect waves-light btn-xs m-b-5">' +
-                '@lang('buttons.delete')' + '</a>' + '</td>' +
-                '<input type="hidden" name="units[]" value="' + unit_id + '" />' +
-                '<input type="hidden" name="prices[]" value="' + price + '" />' +
-                '<input type="hidden" name="description[]" value="' + description + '" />' +
-                '<input type="hidden" name="invoice[]" value="' + invoiceNumber + '" />' +
+        $(function() {
+            let ajax_request = {
+                abort: function() {}
+            };
+            $('body').on('keyup focus', '#item_name', function(e) {
+                if ([9, 16, 17, 20, undefined].includes(e.keyCode) || (e.keyCode >= 30 && e.keyCode <=
+                        40)) {
+                    return;
+                }
 
-                '</td>' +
-                "</tr>"
-            );
+                if ($('#stores').val() == '') {
+                    alert('Please Select Store...');
+                    return;
+                }
 
-            $('#client_id').prop('selectedIndex', 0);
-            $('#unit_id').prop('selectedIndex', 0);
-            $('#price').val("");
-            $('#item').val("");
-            $('#price').val("");
-            $('#quantity').val(0);
+                if ($(this).val() == '') return;
+                ajax_request.abort();
 
-
-        });
-
-        $('body').on('click', '.removeRow', function() {
-            var id = $(this).attr('data-id');
-            var tr = $(this).closest($('#removeRow' + id).parent().parent());
-            tr.find('td').fadeOut(500, function() {
-                tr.remove();
+                ajax_request = $.ajax({
+                    url: "{{ routeHelper('invoices.items.list') }}",
+                    type: "GET",
+                    data: {
+                        store_id: $('#stores').val(),
+                        name: $(this).val()
+                    },
+                    success: function(response) {
+                        $('#items').empty().removeClass('d-none');
+                        $.each(response, function(key, val) {
+                            $('#items').append(
+                                `<li class="selected-item" data-name="${val}" data-id="${key}">${val}</li>`
+                            );
+                        });
+                    }
+                });
             });
+
+            $("#quantity").on("change", function() {
+                let qty = Number($(this).val());
+                let current_qty = Number($('#current_quantity').val());
+                let item_qty = Number($('#item-qty').val());
+                let sumqty1 = current_qty - item_qty;
+                console.log(sumqty);
+                if (qty > sumqty1) {
+                    $(this).val(sumqty1);
+                } else if (qty > current_qty) {
+                    $(this).val(current_qty);
+                }
+
+            });
+
+            $("#item_name").on("focusout", function() {
+                setTimeout(() => {
+                    $("#items").addClass('d-none').empty();
+                }, 200);
+            });
+
+            $('body').on('click', '.selected-item', function() {
+                $('#item_name').val($(this).data('name'));
+                $.ajax({
+                    url: "{{ routeHelper('invoices.items.details') }}",
+                    type: "GET",
+                    data: {
+                        item_id: $(this).data('id'),
+                        store_id: $('#stores').val()
+                    },
+                    success: function(response) {
+                        // console.log(response.stores[0].pivot.quantity);
+                        $('#item_name').data('id', response.id);
+                        $('#category').val(response.category.name);
+                        $('#unit').val(response.unit.name);
+                        $('#pay_price').val(response.pay_price);
+                        $('#sale_price').val(response.sale_price);
+                        $('#current_quantity').val(response.stores[0].pivot.quantity);
+                        $('#quantity').val(1).focus();
+                    },
+                    error: function(response) {
+                        alert(response.responseJSON.message);
+
+                    }
+                });
+            });
+
+            $('body').on('click', '#add-item-details', function() {
+                checkItemCount($('#item_name').data('id'));
+                emptyElements();
+                calcTotal();
+                $("#item_name").focus();
+            });
+
+            $('body').on('click', '.remove-row', function() {
+                if (confirm("Are You Sure ??")) {
+                    $(this).closest('tr').remove();
+                    reCalcItem();
+                    calcTotal();
+                }
+            });
+
+            //Task
+            $('body').on('change', '#item-sale-prcie', function() {
+                reCalcItem();
+                calcTotal();
+            });
+
+            $('body').on('keyup', '#item-qty', function() {
+                $.ajax({
+                    url: "{{ routeHelper('invoices.items.quantity') }}",
+                    type: "GET",
+                    data: {
+                        id: $('#item_name').data('id'),
+                    },
+                    success: function(response) {
+                        let itemQty = Number($('#item-qty').val());
+                        let resQty = response.stores[0].pivot.quantity;
+                        if (itemQty > resQty) {
+                            $('#item-qty').val(resQty);
+                        }
+                        reCalcItem();
+                        calcTotal();
+                    }
+                });
+
+            });
+            //End~Task
+
+            function drawTr() {
+                let length = $('.item-row').length + 1;
+                return `<tr class='item-row' id="item-row-id-${$('#item_name').data('id')}">
+                        <td>${ length }</td>
+                        <td>${ $('#item_name').val() }</td>
+                        <td>${ $('#category').val() }</td>
+                        <td>${ $('#unit').val() }</td>
+                        <td>${ $('#pay_price').val() }</td>
+                        <td><input id="item-sale-prcie" value="${ $('#sale_price').val() }"></td>
+                        <td><input id="item-qty" value="${ $('#quantity').val() }"></td>
+                        <td class='total-item'>${ Number($('#quantity').val()) * Number($('#sale_price').val()) }</td>
+                        <td>
+                            <button type="button" class='btn btn-danger btn-sm remove-row'> <i class='fas fa-trash'></i> </button>
+                        </td>
+                    </tr>`;
+            }
+
+
+            function checkItemCount(id) {
+                if ($(`tr#item-row-id-${id}`).length) {
+                    let count = Number($(`tr#item-row-id-${id}`).find("#item-qty").val()) + Number($('#quantity')
+                        .val());
+                    $(`tr#item-row-id-${id}`).find("#item-qty").val(count);
+                    reCalcItem();
+                } else {
+                    $('#invoice-details').prepend(drawTr());
+                }
+            }
+
+            function reCalcItem() {
+                $.each($('#invoice-details .item-row'), function() {
+                    let qty = Number($(this).find('#item-qty').val());
+                    let price = Number($(this).find('#item-sale-prcie').val());
+                    $(this).find('.total-item').text(qty * price);
+                });
+            }
+
+            function calcTotal() {
+                let total = 0;
+                $.each($('.total-item'), function() {
+                    total += Number($(this).text());
+                });
+                $('#total').val(total);
+            }
+
+            function emptyElements() {
+                $('#category').val('');
+                $('#unit').val('');
+                $('#pay_price').val('');
+                $('#sale_price').val('');
+                $('#current_quantity').val('');
+                $('#quantity').val('');
+                $('#item_name').val('');
+            }
         });
     </script>
-@endsection
+@endpush

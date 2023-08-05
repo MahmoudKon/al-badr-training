@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = ['name', 'address', 'phone', 'is_active'];
-    
+
     public function user()
     {
         return $this->hasMany(User::class, 'shop_id', 'id');

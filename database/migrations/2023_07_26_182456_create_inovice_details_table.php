@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('item_id')->constrained('items')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedFloat('price', 6, 4)->default(0);
-            $table->float('quantity', 10, 4)->default(0);
-            $table->date('date')->nullable();
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedDecimal('pay_price', 10, 4);
+            $table->unsignedDecimal('sale_price', 10, 4);
+            $table->unsignedDecimal('qty', 10, 4);
             $table->softDeletes();
             $table->timestamps();
         });

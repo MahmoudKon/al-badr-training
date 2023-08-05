@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Exception;
+use App\Models\Item;
 use App\Models\Unit;
 use App\Models\Store;
 use App\Models\Category;
@@ -40,7 +41,8 @@ class ItemsController extends DashboardController
         return [
             'categories' => Category::select('id', 'name')->pluck('name', 'id'),
             'units' => Unit::select('id', 'name')->pluck('name', 'id'),
-            'stores' => Store::select('id', 'name')->pluck('name', 'id')
+            'stores' => Store::select('id', 'name')->pluck('name', 'id'),
+            // 'barcode'    => (int) Item::max('barcode') + 1,
         ];
     }
 }

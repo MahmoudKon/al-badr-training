@@ -39,15 +39,26 @@
         </select>
         @include('layouts.includes.dashboard.validation-error', ['input' => 'unit_id'])
     </div>
-    <div class="form-group">
-        <label class="form-label required">Price</label>
-        <div class="input-icon mb-3">
-            <input type="number" value="{{ $row->name ?? '' }}" name="price" class="form-control"
-                placeholder="Itemprice..." autofocus>
-            <span class="input-icon-addon"> <i class="fas fa-user"></i> </span>
+    <div class="form-group mb-3">
+        <label class="form-label required">@lang('items.sale_price')</label>
+        <div class="input-icon">
+            <input type="text" value="{{ $row->sale_price ?? old('sale_price') }}" name="sale_price"
+                class="form-control" placeholder="@lang('items.sale_price')" autofocus>
+            <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
         </div>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'price'])
+        @include('layouts.includes.dashboard.validation-error', ['input' => 'sale_price'])
     </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label required">@lang('items.pay_price')</label>
+        <div class="input-icon">
+            <input type="text" value="{{ $row->pay_price ?? old('pay_price') }}" name="pay_price"
+                class="form-control" placeholder="@lang('items.pay_price')" autofocus>
+            <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
+        </div>
+        @include('layouts.includes.dashboard.validation-error', ['input' => 'pay_price'])
+    </div>
+
     <div class="form-group">
         <label class="form-label required">Quantity</label>
         <div class="input-icon mb-3">
@@ -59,9 +70,18 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlTextarea1">الوصف</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12" name="description"></textarea>
-        @include('layouts.includes.dashboard.validation-error', ['input' => 'description'])
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12" name="desc"></textarea>
+        @include('layouts.includes.dashboard.validation-error', ['input' => 'desc'])
     </div>
+    {{-- <div class="form-group mb-3">
+        <label class="form-label required">@lang('items.barcode')</label>
+        <div class="input-icon">
+            <input type="text" value="{{ $row->barcode ?? old('barcode', $barcode) }}" name="barcode"
+                class="form-control" placeholder="@lang('items.barcode')" autofocus>
+            <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
+        </div>
+        @include('layouts.includes.dashboard.validation-error', ['input' => 'barcode'])
+    </div> --}}
 </div>
 <div class="card-footer text-center">
     <button type="submit" class="btn btn-info btn-sm"> حفظ <i class="fas fa-save mx-2"></i> </button>

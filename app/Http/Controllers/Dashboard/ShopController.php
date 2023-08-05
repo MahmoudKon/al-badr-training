@@ -31,7 +31,7 @@ class ShopController extends Controller
     public function destroy()
     {
         $row = Shop::first();
-        $row->forcedelete();
+        $row->delete();
         session()->flash('success', 'تم حذف جميع بيانات المؤسسة بنجاح');
         auth()->logout();
         return redirect()->route('login');

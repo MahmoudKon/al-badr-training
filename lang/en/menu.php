@@ -39,4 +39,12 @@ return [
 
     // SHOP
     'shop' => 'Shop Setting',
+
+    // INVOICES
+    'invoices' => 'Invoices',
+    'invoice' => 'Invoice',
+    'the invoice' => 'Invoice',
+
+    //PRINTSETTINGS
+    'print_settings' => 'Print Settings',
 ];

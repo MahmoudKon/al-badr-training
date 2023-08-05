@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('invoice_number');
-            $table->date('date')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null')->onUpdate('cascade');
+            $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('set null')->onUpdate('cascade');
+            $table->unsignedDecimal('total', 10, 4);
+            $table->unsignedBigInteger('bill_no');
+            $table->timestamp('bill_date');
             $table->softDeletes();
             $table->timestamps();
         });
