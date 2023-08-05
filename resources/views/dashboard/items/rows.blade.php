@@ -9,8 +9,11 @@
         <td> {{ $row->name }} </td>
         <td> {{ $row->category->name }} </td>
         <td> {{ $row->unit->name }} </td>
-        <td> {{ $row->price }} </td>
-        
+        <td> {{ $row->sale_price }} </td>
+        <td> {{ $row->pay_price }} </td>
+        <td>
+            <img class="img-thumbnail" width="100px" src="{{ $row->image }}">
+        </td>
         <td>
             @include('dashboard.includes.buttons.toggle-status',  ['id' => $row->id, 'check' => $row->is_active])
         </td>

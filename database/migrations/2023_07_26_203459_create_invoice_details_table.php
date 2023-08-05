@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('invoice_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
-            $table->text('desc')->nullable();
-            $table->string('image')->nullable();
-            $table->unsignedSmallInteger('min')->default(0);
-            $table->unsignedFloat('sale_price', 6, 4)->default(0);
-            $table->unsignedFloat('pay_price', 6, 4)->default(0);
-            $table->boolean('is_active')->default(true);
+            $table->foreignId('item_id')->constrained('items')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedFloat('price', 6, 4)->default(0);
+            $table->bigInteger('quantity')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -35,7 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::enableForeignKeyConstraints();
-            Schema::dropIfExists('items');
+            Schema::dropIfExists('invoice_details');
         Schema::disableForeignKeyConstraints();
     }
 };

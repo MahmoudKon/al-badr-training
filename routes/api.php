@@ -16,4 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+   
+});
+
+Route::middleware('auth:api')->group(function () {
+    
+    Route::apiResource('users',UserController::class );
+    Route::apiResource('categories',CategoryController::class );
+    Route::apiResource('units',UnitController::class );
+    Route::apiResource('items',ItemController::class );
+    Route::apiResource('shops',ShopController::class );
+    Route::apiResource('stores',StoreController::class );
+    Route::apiResource('clients',ClientsController::class );
+
+
+
 });
