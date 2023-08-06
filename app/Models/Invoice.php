@@ -28,7 +28,7 @@ class Invoice extends Model
 
     public function details()
     {
-        return $this->hasMany(InvoiceDetail::class);
+        return $this->hasMany(InvoiceDetail::class, 'invoice_id', 'id');
     }
 
     public static function getMaxNumber()
@@ -67,6 +67,7 @@ class Invoice extends Model
         self::creating(function($model) {
             $model->shop_id = shopId();
             $model->user_id = auth()->id();
+            $model->bill_no = self::getMaxNumber();
         });
     }
 }

@@ -84,6 +84,11 @@ $(function() {
             contentType: false,
             beforeSend: function (jqHXR) { form.closest('.card').addClass('load').find('.error').empty(); },
             success: function(response) {
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+
                 modal.modal('hide').find('.modal-body').empty();
                 showAlert(success_alert, response.message);
 

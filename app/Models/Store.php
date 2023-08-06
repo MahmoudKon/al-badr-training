@@ -19,6 +19,11 @@ class Store extends Model
         return $builder->when(request()->get('filter'), fn($query, $filter) => $query->where('name', 'LIKE', "%$filter%"));
     }
 
+    public function scopePerStoreId(Builder $builder): Builder
+    {
+        return $builder->where('store_id', request()->store_id)->where('quantity', '>', '0');
+    }
+
     protected static function booted(): void
     {
         static::addGlobalScope(new PerShopScope); // assign the Scope here

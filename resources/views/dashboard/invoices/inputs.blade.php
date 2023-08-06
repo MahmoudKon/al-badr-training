@@ -164,6 +164,12 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-sm btn-primary"> <i class="fas fa-save"></i> @lang('buttons.save') </button>
+        </div>
+    </div>
 </div>
 
 @push('js')
@@ -199,8 +205,13 @@
             $("#quantity").on("change", function() {
                 let qty = Number( $(this).val() );
                 let current_qty = Number( $('#current_quantity').val() );
-                if ( qty > current_qty ) {
-                    $(this).val( current_qty );
+                let selected_qty = Number( $('body').find(`#item-row-id-${$('#item_name').data('id')} .item-qty`).text() );
+                let main_qty = current_qty - selected_qty;
+
+                console.log(main_qty , current_qty , selected_qty, qty);
+
+                if ( qty > main_qty ) {
+                    $(this).val( main_qty );
                 }
             });
 
@@ -218,12 +229,12 @@
                     data: {item_id: $(this).data('id'), store_id: $('#stores').val()},
                     success: function(response) {
                         $('#item_name').data('id', response.id);
-                        $('#category').val(response.category.name);
-                        $('#unit').val(response.unit.name);
+                        $('#category').val(response.category.name).data('id', response.category_id);
+                        $('#unit').val(response.unit.name).data('id', response.unit_id);
                         $('#pay_price').val(response.pay_price);
                         $('#sale_price').val(response.sale_price);
                         $('#current_quantity').val(response.stores[0].pivot.quantity);
-                        $('#quantity').val(1).focus();
+                        $('#quantity').val(1).focus().change();
                     },
                     error: function(response) {
                         alert(response.responseJSON.message);
@@ -232,6 +243,12 @@
             });
 
             $('body').on('click', '#add-item-details', function() {
+                if ( $('#quantity').val() <= 0 ) {
+                    alert("Please type your qty..");
+                    return;
+                }
+
+                console.log($('#quantity').val());
                 checkItemCount( $('#item_name').data('id') );
                 emptyElements();
                 calcTotal();
@@ -246,16 +263,36 @@
                 }
             });
 
+            $('body').on('change', '.item-qty', function() {
+                let qty = $(this).val();
+                let old = $(this).data('old');
+
+                if (qty > old) {
+                    alert("Max qty is " + old);
+                    $(this).val(old);
+                }
+                reCalcItem();
+                calcTotal();
+            });
+
+            $('body').on('change', '.item-sale-prcie', function() {
+                reCalcItem();
+                calcTotal();
+            });
+
             function drawTr() {
                 let length = $('.item-row').length + 1;
                 return `<tr class='item-row' id="item-row-id-${$('#item_name').data('id')}">
+                        <input type='hidden' name='items[${length}][item_id]' value='${$('#item_name').data('id')}'>
+                        <input type='hidden' name='items[${length}][unit_id]' value='${$('#unit').data('id')}'>
+                        <input type='hidden' name='items[${length}][category_id]' value='${$('#category').data('id')}'>
                         <td>${ length }</td>
                         <td>${ $('#item_name').val() }</td>
                         <td>${ $('#category').val() }</td>
                         <td>${ $('#unit').val() }</td>
                         <td>${ $('#pay_price').val() }</td>
-                        <td class="item-sale-prcie">${ $('#sale_price').val() }</td>
-                        <td class="item-qty">${ $('#quantity').val() }</td>
+                        <td><input type='text' class="item-sale-prcie" name='items[${length}][sale_price]' value='${ $('#sale_price').val() }'></td>
+                        <td> <input type='text' name='items[${length}][qty]' class='item-qty' data-old='${$('#current_quantity').val()}' value='${ $('#quantity').val() }'> </td>
                         <td class='total-item'>${ Number($('#quantity').val()) * Number($('#sale_price').val()) }</td>
                         <td>
                             <button type="button" class='btn btn-danger btn-sm remove-row'> <i class='fas fa-trash'></i> </button>
@@ -276,8 +313,8 @@
 
             function reCalcItem() {
                 $.each( $('#invoice-details .item-row'), function() {
-                    let qty = Number( $(this).find('.item-qty').text() );
-                    let price = Number( $(this).find('.item-sale-prcie').text() );
+                    let qty = Number( $(this).find('.item-qty').val() );
+                    let price = Number( $(this).find('.item-sale-prcie').val() );
                     $(this).find('.total-item').text(qty * price);
                 });
             }

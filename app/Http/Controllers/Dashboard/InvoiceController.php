@@ -3,16 +3,28 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Requests\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Item;
 use App\Models\Store;
+use App\Services\InvoiceService;
+use Exception;
 
 class InvoiceController extends DashboardController
 {
     protected string $folder = 'invoices';
     protected string $model  = 'App\\Models\\Invoice';
     protected bool $btn_ajax = false;
+
+    public function store(InvoiceRequest $request, InvoiceService $service)
+    {
+        $response = $service->handel($request->validated());
+
+        return $response instanceof Exception
+                ? response()->json($response, 500)
+                : response()->json(['redirect' => routeHelper('invoices.index')], 200);
+    }
 
     public function items()
     {
@@ -26,13 +38,10 @@ class InvoiceController extends DashboardController
     {
         $row = Item::with([
                             'category', 'unit',
-                            'stores' => function($query) {
-                                $query->where('store_id', request()->store_id)->where('quantity', '>', '0');
-                            }
+                            'stores' => fn($query) => $query->perStoreId()
                         ])
-                        ->whereHas('stores', function($query) {
-                            $query->where('store_id', request()->store_id)->where('quantity', '>', '0');
-                        })->find(request()->get('item_id'));
+                        ->whereHas('stores', fn($query) => $query->perStoreId())
+                        ->find(request()->get('item_id'));
         if ($row ) {
             return $row;
         }

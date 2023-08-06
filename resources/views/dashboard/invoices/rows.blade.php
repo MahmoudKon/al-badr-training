@@ -5,6 +5,7 @@
                 <input class="form-check-input cursor-pointer m-0 align-middle row-checkbox" value="{{ $row->id }}" type="checkbox">
             </label>
         </td>
+        <td> {{ $loop->iteration }} </td>
         <td> {{ $row->bill_date }} </td>
         <td> {{ $row->client->name }} </td>
         <td> {{ $row->user->name }} </td>
