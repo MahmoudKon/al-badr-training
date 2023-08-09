@@ -44,3 +44,7 @@ Route::get('invoices/items/details', 'InvoiceController@itemDetails')->name('inv
 Route::get('print_settings', 'PrintSettingController@index')->name('print_settings.index');
 Route::post('print_settings', 'PrintSettingController@update')->name('print_settings.update');
 Route::get('print_settings/print', 'PrintSettingController@print')->name('print_settings.print');
+
+
+
+Route::get('report', 'ReportController@index')->name('report.index');

@@ -38,32 +38,34 @@
                 @include('layouts.includes.dashboard.validation-error', ['input' => 'unit_id'])
             </div>
 
-            @for ($i = 0; $i < count($stores); $i++)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label class="form-label required">@lang('items.select-store')</label>
-                            <select name="stores[{{ $i }}][store_id]" class="form-control select2">
-                                <option value="">---</option>
-                                @foreach ($stores as $id => $name)
-                                    <option value="{{ $id }}" {{ isset($row) && $row->stores->where('id', $id)->count() ? 'selected' : '' }}>{{ $name }}</option>
-                                @endforeach
-                            </select>
-                            @include('layouts.includes.dashboard.validation-error', ['input' => "stores.$i.store_id"])
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label class="form-label required">@lang('items.quantity')</label>
-                            <div class="input-icon">
-                                <input type="text" value="{{ $row->sale_price ?? old('sale_price') }}" name="stores[{{ $i }}][quantity]" class="form-control" placeholder="@lang('items.quantity')" autofocus>
-                                <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
+            @if ($row)
+                @foreach ($row->stores as $item_store)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label required">@lang('items.select-store')</label>
+                                <select name="stores[{{ $item_store->id }}][store_id]" class="form-control select2 stores-select">
+                                    <option value="">---</option>
+                                    @foreach ($stores as $id => $name)
+                                        <option value="{{ $id }}" data-qty="{{ $row->stores->where('id', $id)->first()->pivot->quantity ?? 0 }}" {{ isset($row) && $item_store->id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    @endforeach
+                                </select>
+                                @include('layouts.includes.dashboard.validation-error', ['input' => "stores.$item_store->id.store_id"])
                             </div>
-                            @include('layouts.includes.dashboard.validation-error', ['input' => "stores.$id.quantity"])
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label required">@lang('items.quantity')</label>
+                                <div class="input-icon">
+                                    <input type="text" value="" name="stores[{{ $item_store->id }}][quantity]" class="form-control store-qty" placeholder="@lang('items.quantity')" autofocus>
+                                    <span class="input-icon-addon"> <i class="fa-solid fa-list"></i> </span>
+                                </div>
+                                @include('layouts.includes.dashboard.validation-error', ['input' => "stores.$item_store->id.quantity"])
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endfor
+                @endforeach
+            @endif
 
             @if (count($stores) == 0)
                 <div class="form-group mb-3">
@@ -128,3 +130,16 @@
 <div class="card-footer text-center">
     <button type="submit" class="btn btn-info"> @lang('buttons.save') <i class="fas fa-save"></i> </button>
 </div>
+
+@push('js')
+    <script>
+        $(function() {
+            $('body').on('change', '.stores-select', function() {
+                let qty = $(this).find('option:selected').data('qty');
+                $(this).closest('.row').find('input.store-qty').val(qty);
+            });
+
+            $('.stores-select').change();
+        });
+    </script>
+@endpush
